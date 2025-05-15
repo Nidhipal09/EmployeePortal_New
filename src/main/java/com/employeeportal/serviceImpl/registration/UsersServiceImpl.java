@@ -1,7 +1,5 @@
 package com.employeeportal.serviceImpl.registration;
 
-import com.employeeportal.dto.registration.SearchDTO;
-import com.employeeportal.dto.registration.SearchResponseDTO;
 import com.employeeportal.dto.registration.UserDto;
 import com.employeeportal.exception.BadRequestException;
 import com.employeeportal.model.onboarding.EmployeeOrganizationDetails;

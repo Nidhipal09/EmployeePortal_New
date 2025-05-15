@@ -1,7 +1,5 @@
 package com.employeeportal.service.registration;
 
-import com.employeeportal.dto.registration.SearchDTO;
-import com.employeeportal.dto.registration.SearchResponseDTO;
 import com.employeeportal.dto.registration.UserDto;
 
 import java.util.List;
