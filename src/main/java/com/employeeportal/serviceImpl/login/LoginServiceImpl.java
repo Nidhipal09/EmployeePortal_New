@@ -1,5 +1,6 @@
 package com.employeeportal.serviceImpl.login;
 
+import java.lang.foreign.Linker.Option;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -88,11 +89,33 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public LoginResponse verifyLogin(LoginRequest loginRequest) throws Exception {
-        // Find the employee by email using EmployeeRegRepository
+
+        String email = loginRequest.getEmail();
+        String mobileNumber = loginRequest.getMobileNumber();
+
+        if (email.equals("") && mobileNumber.equals("")) {
+            throw new BadCredentialsException("Kindly enter email or mobile number to login");
+        }
+
+        if (!email.equals("") && !mobileNumber.equals("")) {
+            throw new BadCredentialsException("Kindly use either email or mobile number to login");
+        }
+
         EmployeeReg employeeReg = employeeRegRepository.findByEmail(loginRequest.getEmail());
+        // Find the employee by email using EmployeeRegRepository
 
         if (employeeReg == null) {
-            throw new BadCredentialsException(ApplicationConstant.AUTHENTICATION_EMAIL_FAILED);
+            employeeReg = employeeRegRepository.findByMobileNumberFromEmployee(mobileNumber);
+            if (employeeReg == null) {
+                employeeReg = employeeRegRepository.findBySecondaryMobileNumberFromEmployee(mobileNumber);
+                if (employeeReg == null) {
+                    if (email.equals(""))
+                        throw new BadCredentialsException(ApplicationConstant.AUTHENTICATION_MOBILE_NUMBER_FAILED);
+                    else
+                        throw new BadCredentialsException(ApplicationConstant.AUTHENTICATION_EMAIL_FAILED);
+
+                }
+            }
         }
         System.out.println(employeeReg.getPassword() + " " + loginRequest.getPassword());
         // Check if the email matches and validate the password
@@ -125,7 +148,7 @@ public class LoginServiceImpl implements LoginService {
         loginResponse.setRoleName(role.getRoleName());
 
         // Generate JWT token
-        loginResponse.setToken(jwtUtil.generateToken(loginRequest.getEmail()));
+        loginResponse.setToken(jwtUtil.generateToken(employeeReg.getEmail()));
 
         return loginResponse;
     }

@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String principal) throws UsernameNotFoundException {
         EmployeeReg employeeReg = employeeRegRepository.findByEmail(principal.trim());
         if (employeeReg == null) {
-            System.out.println("UserDetailsServiceImplllllllllllllllll: " + employeeReg);
+            employeeReg = employeeRegRepository.findByMobileNumberFromEmployee(principal);
 
         }
         if (employeeReg != null) {

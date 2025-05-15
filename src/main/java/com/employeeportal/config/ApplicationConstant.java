@@ -13,6 +13,7 @@ public interface ApplicationConstant {
     String AUTHORIZATION_EMAIL_ERROR = "Please enter a valid email address";
     String AUTHORIZATION_PASSWORD_ERROR = "Invalid password, please try again";
     String AUTHENTICATION_EMAIL_FAILED = "Invalid email: email with this address does not exist";
+    String AUTHENTICATION_MOBILE_NUMBER_FAILED = "Invalid mobile number: user with this number does not exist";
     String HEADERS = "Authorization";
     String AUTH_TYPE = "Bearer ";
     String EXIST_EMAIL = "This email is already exists";
