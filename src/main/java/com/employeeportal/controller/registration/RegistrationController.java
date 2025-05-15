@@ -1,11 +1,6 @@
 package com.employeeportal.controller.registration;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.validation.Valid;
-
-import com.employeeportal.dto.registration.RegistrationRequest;
 import com.employeeportal.dto.registration.RegistrationRequestDTO;
 import com.employeeportal.dto.registration.RegistrationResponseDTO;
 import com.employeeportal.dto.registration.SendOtpDto;
@@ -13,11 +8,8 @@ import com.employeeportal.dto.registration.TokenDto;
 import com.employeeportal.dto.registration.ValidateOtpDto;
 import com.employeeportal.dto.registration.ValidateTokenResponseDto;
 import com.employeeportal.exception.NotFoundException;
-import com.employeeportal.exception.ResourceNotFoundException;
-import com.employeeportal.model.NewClass;
 import com.employeeportal.model.OtpResponse;
 import com.employeeportal.model.login.ResponseDTO;
-import com.employeeportal.model.registration.Employee;
 import com.employeeportal.model.registration.ValidateOtpTokenResponse;
 import com.employeeportal.util.JwtUtil;
 import com.employeeportal.util.ResponseUtil;

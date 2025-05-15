@@ -12,7 +12,6 @@ public class LoginRequest {
 
     @Pattern(regexp = "^(\\d{10})?$", message = "Mobile number must be valid")
     private String mobileNumber;
-    
+
     private String password;
 }
-

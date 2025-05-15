@@ -17,7 +17,6 @@ import com.employeeportal.model.onboarding.Relatives;
 import com.employeeportal.model.onboarding.VisaDetails;
 
 import java.util.List;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -36,7 +35,7 @@ public class Employee {
     private String email;
     private String status;
     private String createdTimeStamp;
-    
+
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private PersonalDetails personalDetails;
 
@@ -72,7 +71,6 @@ public class Employee {
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private EmployeeReg employeeReg;
-
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("yyyy/MM/dd"));

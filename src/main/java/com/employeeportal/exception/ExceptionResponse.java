@@ -3,7 +3,6 @@ package com.employeeportal.exception;
 
 import lombok.*;
 
-
 @Builder
 @Data
 @AllArgsConstructor

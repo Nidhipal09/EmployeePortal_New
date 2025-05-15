@@ -12,7 +12,7 @@ public class AdditionalDetailsDTO {
     @JsonIgnore
     public boolean isNull() {
         return this == null ||
-               (this.illnessDeclaration == null &&
-                this.hobbiesDeclaration == null);
+                (this.illnessDeclaration == null &&
+                        this.hobbiesDeclaration == null);
     }
 }

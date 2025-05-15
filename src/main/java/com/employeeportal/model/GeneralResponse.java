@@ -1,6 +1,5 @@
 package com.employeeportal.model;
 
-
 public class GeneralResponse<T> {
 
     private boolean status;

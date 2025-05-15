@@ -1,11 +1,6 @@
 package com.employeeportal.model.onboarding;
 
-import java.util.List;
-
 import javax.persistence.*;
-
-import com.employeeportal.dto.onboarding.EmployeeOrganizationDetailsDTO;
-import com.employeeportal.model.registration.EmployeeReg;
 
 import lombok.Data;
 

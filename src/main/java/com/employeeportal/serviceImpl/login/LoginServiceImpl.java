@@ -1,11 +1,5 @@
 package com.employeeportal.serviceImpl.login;
-
-import java.lang.foreign.Linker.Option;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import com.employeeportal.exception.NotFoundException;
 import com.employeeportal.model.*;
 import com.employeeportal.model.onboarding.EmployeeOrganizationDetails;
 import com.employeeportal.model.onboarding.Role;
@@ -19,13 +13,11 @@ import com.employeeportal.repository.registration.EmployeeRepository;
 import com.employeeportal.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.employeeportal.config.ApplicationConstant;
-import com.employeeportal.config.EmailConstant;
 import com.employeeportal.service.EmailService;
 import com.employeeportal.service.login.LoginService;
 import com.employeeportal.serviceImpl.logout.TokenBlacklistService;
@@ -40,27 +32,7 @@ public class LoginServiceImpl implements LoginService {
     private final JwtUtil jwtUtil;
 
     private final EmailService emailService;
-    // private final EmployeeRelativeRepository employeeRelativeRepository;
-    // private final PersonalDetailsRepository personalDetailsRepository;
-    // private final PermanentAddressRepository permanentAddressRepository;
-    // private final CurrentAddressRepository currentAddressRepository;
-    // private final AddressDetailsRepository addressDetailsRepository;
     private final PasswordEncoder passwordEncoder;
-    // private final BCryptPasswordEncoder passwordEncoder = new
-    // BCryptPasswordEncoder();
-    private final RedisTemplate<String, Object> redisTemplate;
-    // private final DocumentCertificatesRepository documentCertificatesRepository;
-    // private final EducationalQualificationRepository
-    // educationalQualificationRepository;
-    // private final ProfessionalReferencesRepository
-    // professionalReferencesRepository;
-    // private final EmploymentHistoryRepository employmentHistoryRepository;
-    // private final PassportDetailsRepository passportDetailsRepository;
-    // private final VisaStatusRepository visaStatusRepository;
-    // private final WorkPermitRepository workPermitRepository;
-    // private final OtherDetailsRepository otherDetailsRepository;
-    // private final RelativeInfoRepository relativeInfoRepository;
-    // private final PreviewRepository previewRepository;
 
     @Autowired
     private EmployeeRegRepository employeeRegRepository;
@@ -74,17 +46,14 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
 
-    private static final long OTP_EXPIRATION_TIME = 2; // 2 minutes
-
     @Autowired
     public LoginServiceImpl(EmployeeRepository employeeRepository, JwtRepository jwtRepository, JwtUtil jwtUtil,
-            EmailService emailService, PasswordEncoder passwordEncoder, RedisTemplate<String, Object> redisTemplate) {
+            EmailService emailService, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
         this.jwtRepository = jwtRepository;
         this.jwtUtil = jwtUtil;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
-        this.redisTemplate = redisTemplate;
     }
 
     @Override

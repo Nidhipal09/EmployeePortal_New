@@ -2,11 +2,8 @@ package com.employeeportal.model;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -22,7 +19,7 @@ public class JwtEntity {
 
     @Column(name = "valid_session")
     private Boolean validSession;
-    
+
     @Column(name = "primaryId")
     private int primaryId;
 

@@ -39,9 +39,9 @@ public class IdentificationDetails {
                 String encryptedIdentificationNumber = EncryptionUtil.encrypt(identificationNumber);
                 this.identificationNumber = encryptedIdentificationNumber;
             } catch (Exception e) {
-                if(this.identityType == IdentityType.PAN) {
+                if (this.identityType == IdentityType.PAN) {
                     throw new EncryptionException("Error encrypting Pan card number");
-                }else{
+                } else {
                     throw new EncryptionException("Error encrypting Aadhaar card number");
                 }
             }
@@ -50,15 +50,15 @@ public class IdentificationDetails {
     }
 
     public String getIdentificationNumber() {
-        if(this.identificationNumber == null) {
+        if (this.identificationNumber == null) {
             return null;
         }
         try {
             return EncryptionUtil.decrypt(this.identificationNumber);
         } catch (Exception e) {
-            if(this.identityType == IdentityType.PAN) {
+            if (this.identityType == IdentityType.PAN) {
                 throw new EncryptionException("Error decrypting Pan card number");
-            }else{
+            } else {
                 throw new EncryptionException("Error decrypting Aadhaar card number");
             }
         }

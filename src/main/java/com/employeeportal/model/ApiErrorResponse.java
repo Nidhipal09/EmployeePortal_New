@@ -1,6 +1,5 @@
 package com.employeeportal.model;
 
-
 public class ApiErrorResponse extends GeneralResponse<String> {
 
     private int statusCode;

@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.employeeportal.model.registration.Employee;
-
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -39,10 +37,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
   @Query(value = "SELECT password FROM employee WHERE email = :email", nativeQuery = true)
   String findPasswordByEmail(String email);
 
-  Page<Employee> findAllByFirstName(String firstName,  PageRequest pageRequest);
+  Page<Employee> findAllByFirstName(String firstName, PageRequest pageRequest);
 
   @Query(value = "SELECT * FROM employee WHERE first_name = :firstName AND middle_name = :middleName", nativeQuery = true)
-  Page<Employee> findAllByFirstAndMiddleName(String firstName, String middleName,  PageRequest pageRequest);
+  Page<Employee> findAllByFirstAndMiddleName(String firstName, String middleName, PageRequest pageRequest);
 
   // List<PrimaryDetails> findByRoleName(String roleName);
 

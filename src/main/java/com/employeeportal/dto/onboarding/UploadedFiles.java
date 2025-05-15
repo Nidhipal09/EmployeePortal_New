@@ -1,13 +1,11 @@
 package com.employeeportal.dto.onboarding;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 public class UploadedFiles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   // @JsonIgnore
+    // @JsonIgnore
     private Long Id;
     private String url;
 

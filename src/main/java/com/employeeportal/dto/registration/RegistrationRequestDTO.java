@@ -1,16 +1,6 @@
 package com.employeeportal.dto.registration;
 
-import java.sql.Date;
-import java.time.LocalDate;
-
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import lombok.Data;
 

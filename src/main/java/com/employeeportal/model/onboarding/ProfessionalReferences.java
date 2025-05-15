@@ -23,7 +23,7 @@ public class ProfessionalReferences {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "employeeId", nullable = false) 
-    private Employee employee; 
+    @JoinColumn(name = "employeeId", nullable = false)
+    private Employee employee;
 
 }

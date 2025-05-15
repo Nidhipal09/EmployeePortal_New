@@ -10,6 +10,4 @@ public class ValidateOtpDto {
      String email;
      boolean isOtpValid;
 
-  
-
 }

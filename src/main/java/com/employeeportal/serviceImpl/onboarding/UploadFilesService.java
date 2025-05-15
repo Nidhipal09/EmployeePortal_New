@@ -4,7 +4,6 @@ import com.employeeportal.dto.onboarding.UploadedFiles;
 import com.employeeportal.exception.BadRequestException;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,7 +53,7 @@ public class UploadFilesService {
                 Files.createDirectories(uploadPath);
             }
 
-            final String duplicateFileName  = originalFilename;
+            final String duplicateFileName = originalFilename;
             boolean isDuplicate = Files.list(uploadPath)
                     .anyMatch(path -> path.getFileName().toString().startsWith(duplicateFileName + "_"));
 

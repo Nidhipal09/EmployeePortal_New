@@ -2,8 +2,6 @@ package com.employeeportal.dto.onboarding;
 
 import javax.validation.constraints.Pattern;
 
-import com.employeeportal.model.onboarding.IdentityType;
-
 import lombok.Data;
 
 @Data

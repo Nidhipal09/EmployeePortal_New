@@ -1,14 +1,8 @@
 package com.employeeportal.dto.onboarding;
 
 import lombok.Data;
-import java.sql.Date;
-import java.time.LocalDate;
 
 import javax.validation.constraints.Pattern;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
@@ -25,11 +19,11 @@ public class VisaDetailsDTO {
     @JsonIgnore
     public boolean isNull() {
         return this == null ||
-               (this.workPermitDetails == null &&
-                this.workPermitValidTill == null &&
-                this.passportCopy == null &&
-                this.passportCopyUrl == null &&
-                this.status == null &&
-                this.country == null);
+                (this.workPermitDetails == null &&
+                        this.workPermitValidTill == null &&
+                        this.passportCopy == null &&
+                        this.passportCopyUrl == null &&
+                        this.status == null &&
+                        this.country == null);
     }
 }

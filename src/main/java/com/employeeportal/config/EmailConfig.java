@@ -1,4 +1,5 @@
 package com.employeeportal.config;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,6 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
-
 
 @Configuration
 public class EmailConfig {

@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.employeeportal.config.EmailConstant;
@@ -17,7 +16,6 @@ import com.employeeportal.dto.onboarding.AdditionalDetailsDTO;
 import com.employeeportal.dto.onboarding.AddressDTO;
 import com.employeeportal.dto.onboarding.EducationDTO;
 import com.employeeportal.dto.onboarding.EmployeeDTO;
-import com.employeeportal.dto.onboarding.IdentificationDetailsDTO;
 import com.employeeportal.dto.onboarding.OnboardingResponseDTO;
 import com.employeeportal.dto.onboarding.PanCardDetailsDTO;
 import com.employeeportal.dto.onboarding.PassportDetailsDTO;
@@ -27,9 +25,7 @@ import com.employeeportal.dto.onboarding.EmploymentHistoryDTO;
 import com.employeeportal.dto.onboarding.GeneralResponse;
 import com.employeeportal.dto.onboarding.ProfessionalReferencesDTO;
 import com.employeeportal.dto.onboarding.RelativesDTO;
-import com.employeeportal.dto.onboarding.UpdateStatusRequest;
 import com.employeeportal.dto.onboarding.VisaDetailsDTO;
-import com.employeeportal.exception.EncryptionException;
 import com.employeeportal.exception.FieldsMissingException;
 import com.employeeportal.exception.NotFoundException;
 import com.employeeportal.model.onboarding.AdditionalDetails;
@@ -601,7 +597,7 @@ public class OnboadingServiceImpl implements OnboardingService {
         emailService.sendEmail(email, null,
                 EmailConstant.VERIFY_EMPLOYEE_DETAILS_SUBJECT, EmailConstant.VERIFY_EMPLOYEE_DETAILS_TEMPLATE, email);
 
-        return new GeneralResponse("An email is successfully sent to Admin to verify employee "+ email+" details.");        
+        return new GeneralResponse("An email is successfully sent to Admin to verify employee " + email + " details.");
     }
 
 }

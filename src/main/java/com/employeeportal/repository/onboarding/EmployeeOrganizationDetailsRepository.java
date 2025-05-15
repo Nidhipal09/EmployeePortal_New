@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeOrganizationDetailsRepository extends JpaRepository<EmployeeOrganizationDetails, Integer> {
-    
+
     @Query(value = "SELECT * FROM employee_organization_details WHERE employee_id = ?1", nativeQuery = true)
     Optional<EmployeeOrganizationDetails> findByEmployeeId(int employeeId);
 

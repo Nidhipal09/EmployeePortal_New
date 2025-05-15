@@ -10,19 +10,14 @@ import java.util.Map;
 import java.util.Set;
 
 import com.employeeportal.model.ErrorResponse;
-
-import org.springframework.beans.TypeMismatchException;
-import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -45,8 +40,9 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(DateTimeParseException.class)
 	public ResponseEntity<Object> handleDateParseException(
-			DateTimeParseException  ex, WebRequest request) {
-		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Invalid date: Date should be of format dd/MM/yyyy", ex.getMessage());
+			DateTimeParseException ex, WebRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+				"Invalid date: Date should be of format dd/MM/yyyy", ex.getMessage());
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 	}
 
@@ -60,7 +56,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(AlreadyExistsException.class)
 	public ResponseEntity<Object> handleAlreadyExistsException(
-		AlreadyExistsException ex, WebRequest request) {
+			AlreadyExistsException ex, WebRequest request) {
 		String error = "Email already registered";
 		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), error, ex.getMessage());
 		return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
@@ -68,7 +64,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(MobileNumberAlreadyExistsException.class)
 	public ResponseEntity<Object> handleMobileNumberAlreadyExistsException(
-		MobileNumberAlreadyExistsException ex, WebRequest request) {
+			MobileNumberAlreadyExistsException ex, WebRequest request) {
 		String error = "Mobile number already exists";
 		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), error, ex.getMessage());
 		return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface PassportDetailsRepository extends JpaRepository<PassportDetails, Long> {
 
     PassportDetails findByPassportNumber(String passportNumber);
+
     PassportDetails findByEmployeeEmployeeId(int employeeId);
 
     @Modifying

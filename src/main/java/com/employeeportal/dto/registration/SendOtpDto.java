@@ -1,9 +1,8 @@
 package com.employeeportal.dto.registration;
 
 public class SendOtpDto {
-	
+
 	private String email;
-	
 
 	public SendOtpDto() {
 		super();
@@ -22,6 +21,5 @@ public class SendOtpDto {
 		super();
 		this.email = email;
 	}
-	
 
 }

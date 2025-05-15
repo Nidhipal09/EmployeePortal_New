@@ -1,6 +1,5 @@
 package com.employeeportal.config;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -8,22 +7,21 @@ import org.springframework.stereotype.Component;
 
 public class EmailProperties {
 
-    @Value("${spring.mail.host}")
-    private String host;
-    @Value("${spring.mail.port}")
-    private String port;
-    @Value("${spring.mail.username}")
-    private String userName;
-    @Value("${spring.mail.password}")
-    private String password;
-    @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
-    private String startTtlsEnable;
-    @Value("${spring.mail.properties.mail.smtp.starttls.required}")
-    private String startTtlsRequired;
-    @Value("${spring.mail.properties.mail.smtp.auth}")
-    private String smtpAuth;
-    
-    
+	@Value("${spring.mail.host}")
+	private String host;
+	@Value("${spring.mail.port}")
+	private String port;
+	@Value("${spring.mail.username}")
+	private String userName;
+	@Value("${spring.mail.password}")
+	private String password;
+	@Value("${spring.mail.properties.mail.smtp.starttls.enable}")
+	private String startTtlsEnable;
+	@Value("${spring.mail.properties.mail.smtp.starttls.required}")
+	private String startTtlsRequired;
+	@Value("${spring.mail.properties.mail.smtp.auth}")
+	private String smtpAuth;
+
 	public EmailProperties(String host, String port, String userName, String password, String startTtlsEnable,
 			String startTtlsRequired, String smtpAuth) {
 		super();
@@ -104,5 +102,4 @@ public class EmailProperties {
 				+ smtpAuth + "]";
 	}
 
-    
 }

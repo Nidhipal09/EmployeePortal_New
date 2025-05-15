@@ -18,7 +18,7 @@ public interface IdentificationDetailsRepository extends JpaRepository<Identific
     @Transactional
     @Query(value = "delete from identification_details where employee_id = ?1", nativeQuery = true)
     void deleteAllByEmployeeId(int employeeId);
-    
+
     @Query(value = "select * from identification_details where employee_id = ?1 AND identity_type = ?2 ", nativeQuery = true)
     IdentificationDetails findByEmployeeAndType(int employeeId, String identityType);
 

@@ -1,7 +1,5 @@
 package com.employeeportal.dto.onboarding;
 
-import java.time.LocalDate;
-
 import javax.validation.constraints.Pattern;
 
 import lombok.Data;
@@ -19,7 +17,7 @@ public class EducationDTO {
 
     @Pattern(regexp = "^([0-9]{4})/(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])$", message = "Date must be in the format yyyy/MM/dd")
     private String fromDate;
-    
+
     @Pattern(regexp = "^([0-9]{4})/(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])$", message = "Date must be in the format yyyy/MM/dd")
     private String toDate;
     // private String passingCertificateUrl;

@@ -1,7 +1,5 @@
 package com.employeeportal.util;
 
-
-
 import com.employeeportal.model.login.ResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,8 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResponseUtil {
 
-    public ResponseDTO prepareResponseDto(Object obj, String message, Integer code, Boolean status){
-        ResponseDTO responseDTO =new ResponseDTO();
+    public ResponseDTO prepareResponseDto(Object obj, String message, Integer code, Boolean status) {
+        ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setData(obj);
         responseDTO.setMessage(message);
         responseDTO.setCode(code);

@@ -14,11 +14,6 @@ import com.employeeportal.service.EmailService;
 import com.employeeportal.service.registration.UsersService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -105,7 +100,6 @@ public class UsersServiceImpl implements UsersService {
 
             employeeRepository.save(employee);
         }
-
 
         emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "Users Registration Successfully",
                 "registration.html");

@@ -1,14 +1,8 @@
 package com.employeeportal.dto.onboarding;
 
 import lombok.Data;
-import java.sql.Date;
-import java.time.LocalDate;
 
 import javax.validation.constraints.Pattern;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Data
 public class EmployeeOrganizationDetailsDTO {

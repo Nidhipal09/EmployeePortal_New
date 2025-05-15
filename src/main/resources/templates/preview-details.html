@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Send Preview Email </title>
 </head>
+
 <body>
-<h1>Preview Details Form</h1>
-<a href="" target="_blank"--><strong>Employee Signature:</strong> <img th:src="${employeeSignatureUrl}"
-                                                                       style="display:block; border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"
-                                                                       width="28" height="28">
-</a>
-<p><strong>Signature Date:</strong> [[${signatureDate}]]</p>
-<p><strong>Place :</strong> [[${place}]]</p>
-<p> please click the following link for check the preview details:</p>
-<a th:href="${previewDetailsUrl}">Preview Details</a>
+    <h1>Preview Details Form</h1>
+    <a href="" target="_blank" --><strong>Employee Signature:</strong> <img th:src="${employeeSignatureUrl}"
+            style="display:block; border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;" width="28"
+            height="28">
+    </a>
+    <p><strong>Signature Date:</strong> [[${signatureDate}]]</p>
+    <p><strong>Place :</strong> [[${place}]]</p>
+    <p> please click the following link for check the preview details:</p>
+    <a th:href="${previewDetailsUrl}">Preview Details</a>
 </body>
+
 </html>
 <!--<a href="" target="_blank"-->
 <!--   style=" Margin-right:15px; Margin-left:15px; -webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:14px;text-decoration:underline;color:#9AAEA6;">-->

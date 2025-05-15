@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 import com.employeeportal.model.registration.Employee;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

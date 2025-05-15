@@ -25,7 +25,6 @@ public class ValidateTokenResponseDto {
         this.isTokenValid = isTokenValid;
     }
 
-
     public String getMessage() {
         return message;
     }

@@ -1,4 +1,5 @@
 package com.employeeportal.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -12,6 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.Collections;
 import java.util.List;
 import static com.employeeportal.config.ApplicationConstant.*;
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -39,8 +41,7 @@ public class SwaggerConfig {
     }
 
     List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope
-                = new AuthorizationScope(SWAGGER_GLOBAL, SWAGGER_ACCESS);
+        AuthorizationScope authorizationScope = new AuthorizationScope(SWAGGER_GLOBAL, SWAGGER_ACCESS);
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         return Collections.singletonList(

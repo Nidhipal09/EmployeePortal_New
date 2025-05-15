@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -38,7 +36,7 @@ public class EmploymentHistory {
     private String lastMonthSalarySlip1Url;
     private String lastMonthSalarySlip2Url;
     private String lastMonthSalarySlip3Url;
-    
+
     private String appointmentLetterUrl;
 
     @ManyToOne
@@ -52,7 +50,8 @@ public class EmploymentHistory {
     }
 
     public String getEmploymentPeriodFrom() {
-        return (employmentPeriodFrom != null) ? employmentPeriodFrom.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) : null;
+        return (employmentPeriodFrom != null) ? employmentPeriodFrom.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+                : null;
     }
 
     public void setEmploymentPeriodTo(String employmentPeriodTo) {
@@ -61,6 +60,7 @@ public class EmploymentHistory {
     }
 
     public String getEmploymentPeriodTo() {
-        return (employmentPeriodTo != null) ? employmentPeriodTo.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) : null;
+        return (employmentPeriodTo != null) ? employmentPeriodTo.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+                : null;
     }
 }

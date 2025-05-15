@@ -77,16 +77,16 @@ public class AdminConfig {
 
     }
 
-    private void saveRoleDetails(){
+    private void saveRoleDetails() {
         Role roleAdmin = roleRepository.findByRoleName("ADMIN");
-        if(roleAdmin == null) {
+        if (roleAdmin == null) {
             roleAdmin = new Role();
             roleAdmin.setRoleName("ADMIN");
             roleRepository.save(roleAdmin);
         }
 
         Role roleEmployee = roleRepository.findByRoleName("EMPLOYEE");
-        if(roleEmployee == null) {
+        if (roleEmployee == null) {
             roleEmployee = new Role();
             roleEmployee.setRoleName("EMPLOYEE");
             roleRepository.save(roleEmployee);

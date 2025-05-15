@@ -10,11 +10,9 @@ import java.time.format.DateTimeFormatter;
 
 import javax.persistence.*;
 
-import org.apache.tomcat.jni.Local;
-
 @Data
 @Entity
-@Table(name="education")
+@Table(name = "education")
 public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,7 +2,6 @@ package com.employeeportal.dto.onboarding;
 
 import javax.validation.constraints.Pattern;
 
-import com.employeeportal.model.onboarding.IdentityType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -17,7 +16,7 @@ public class PanCardDetailsDTO {
     @JsonIgnore
     public boolean isNull() {
         return this == null ||
-               (this.panIdentificationNumber == null &&
-                this.panIdentificationUrl == null);
+                (this.panIdentificationNumber == null &&
+                        this.panIdentificationUrl == null);
     }
 }

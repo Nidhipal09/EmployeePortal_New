@@ -1,6 +1,5 @@
 package com.employeeportal.service;
 
-
 import com.employeeportal.config.EmailConstant;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,11 +8,9 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-
 import com.employeeportal.config.EmailProperties;
 
 import javax.mail.internet.MimeMessage;
-
 
 @Service
 public class EmailService {
@@ -23,7 +20,6 @@ public class EmailService {
     private final EmailProperties emailProperties;
 
     private final TemplateEngine templateEngine;
-
 
     public EmailService(JavaMailSender emailSender, EmailProperties emailProperties, TemplateEngine templateEngine) {
         this.emailSender = emailSender;
@@ -40,8 +36,8 @@ public class EmailService {
 
             Context ctx = new Context();
             ctx.setVariable("otpCode", randomNumber);
-            ctx.setVariable("activateLink", EmailConstant.ACTIVE_SIGNUP_LINK + "?token="+ randomNumber);
-            ctx.setVariable("resetLink", EmailConstant.RESET_PASSWORD_LINK + "?token=" + randomNumber); 
+            ctx.setVariable("activateLink", EmailConstant.ACTIVE_SIGNUP_LINK + "?token=" + randomNumber);
+            ctx.setVariable("resetLink", EmailConstant.RESET_PASSWORD_LINK + "?token=" + randomNumber);
 
             helper.setText(templateEngine.process(templateName, ctx), true);
             helper.setSubject(subject);
@@ -60,8 +56,8 @@ public class EmailService {
 
             Context ctx = new Context();
             ctx.setVariable("otpCode", randomNumber);
-            ctx.setVariable("activateLink", EmailConstant.ACTIVE_SIGNUP_LINK + "?token="+ randomNumber);
-            ctx.setVariable("resetLink", EmailConstant.RESET_PASSWORD_LINK + "?token=" + randomNumber); 
+            ctx.setVariable("activateLink", EmailConstant.ACTIVE_SIGNUP_LINK + "?token=" + randomNumber);
+            ctx.setVariable("resetLink", EmailConstant.RESET_PASSWORD_LINK + "?token=" + randomNumber);
             ctx.setVariable("employeeEmail", other);
 
             helper.setText(templateEngine.process(templateName, ctx), true);
@@ -79,7 +75,7 @@ public class EmailService {
             helper.setFrom(emailProperties.getUserName());
             helper.setTo(email);
             Context ctx = new Context();
-            ctx.setVariable("email",email);
+            ctx.setVariable("email", email);
             ctx.setVariable("password", password);
             helper.setText(templateEngine.process(templateName, ctx), true);
             helper.setSubject(subject);
@@ -90,17 +86,16 @@ public class EmailService {
     }
 
     public void sendLeaveNotification(String toEmail,
-                                      String employeeName,
-                                      String leaveType,
-                                      String fromDate,
-                                      String toDate,
-                                      int totalLeaveDays,
-                                      String reason,
-                                      String statusType,
-                                      String subject,
-                                      String templateName,
-                                      String dayOfLeave
-                                     ) {
+            String employeeName,
+            String leaveType,
+            String fromDate,
+            String toDate,
+            int totalLeaveDays,
+            String reason,
+            String statusType,
+            String subject,
+            String templateName,
+            String dayOfLeave) {
         try {
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -108,8 +103,8 @@ public class EmailService {
             helper.setTo(toEmail);
 
             Context ctx = new Context();
-            ctx.setVariable("employeeName",employeeName);
-            ctx.setVariable("dayOfLeave",dayOfLeave);
+            ctx.setVariable("employeeName", employeeName);
+            ctx.setVariable("dayOfLeave", dayOfLeave);
             ctx.setVariable("leaveType", leaveType);
             ctx.setVariable("fromDate", fromDate);
             ctx.setVariable("toDate", toDate);
@@ -125,7 +120,8 @@ public class EmailService {
         }
     }
 
-    public void sendPreviewEmailToHr(String email, String employeeSignatureUrl, String signatureDate, String place, String previewDetailsSubject, String previewDetailsTemplateName,String previewDetailsUrl) {
+    public void sendPreviewEmailToHr(String email, String employeeSignatureUrl, String signatureDate, String place,
+            String previewDetailsSubject, String previewDetailsTemplateName, String previewDetailsUrl) {
         try {
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -133,11 +129,10 @@ public class EmailService {
             helper.setTo(email);
 
             Context ctx = new Context();
-            ctx.setVariable("employeeSignatureUrl",employeeSignatureUrl);
-            ctx.setVariable("signatureDate",signatureDate);
+            ctx.setVariable("employeeSignatureUrl", employeeSignatureUrl);
+            ctx.setVariable("signatureDate", signatureDate);
             ctx.setVariable("place", place);
             ctx.setVariable("previewDetailsUrl", previewDetailsUrl);
-
 
             helper.setText(templateEngine.process(previewDetailsTemplateName, ctx), true);
             helper.setSubject(previewDetailsSubject);
@@ -148,4 +143,3 @@ public class EmailService {
     }
 
 }
-

@@ -1,26 +1,14 @@
 package com.employeeportal.util;
 
-import com.employeeportal.model.GeneralResponses;
-import com.employeeportal.model.JwtEntity;
-import com.employeeportal.model.onboarding.EmployeeOrganizationDetails;
-import com.employeeportal.model.onboarding.Role;
-import com.employeeportal.model.registration.Employee;
 import com.employeeportal.model.registration.EmployeeReg;
-import com.employeeportal.repository.onboarding.EmployeeOrganizationDetailsRepository;
-import com.employeeportal.repository.onboarding.RoleRepository;
 import com.employeeportal.repository.registration.EmployeeRegRepository;
-import com.employeeportal.repository.registration.EmployeeRepository;
-import com.employeeportal.repository.JwtRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.netty.util.internal.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 import java.util.function.Function;
@@ -33,24 +21,8 @@ public class JwtUtil {
     @Value("${jwt.token.client.expiration}")
     private Long expiration;
 
-    private final JwtRepository jwtRepository;
-
-    private final EmployeeOrganizationDetailsRepository employeeOrganizationDetailsRepository;
-    private final RoleRepository roleRepository;
-    private final EmployeeRepository employeeRepository;
-    private final EmployeeRegRepository employeeRegRepository;
-
     @Autowired
-    public JwtUtil(JwtRepository jwtRepository,
-            EmployeeOrganizationDetailsRepository employeeOrganizationDetailsRepository,
-            RoleRepository roleRepository, EmployeeRepository employeeRepository,
-            EmployeeRegRepository employeeRegRepository) {
-        this.employeeRegRepository = employeeRegRepository;
-        this.jwtRepository = jwtRepository;
-        this.employeeOrganizationDetailsRepository = employeeOrganizationDetailsRepository;
-        this.roleRepository = roleRepository;
-        this.employeeRepository = employeeRepository;
-    }
+    private EmployeeRegRepository employeeRegRepository;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

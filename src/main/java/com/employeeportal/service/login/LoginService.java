@@ -1,7 +1,5 @@
 package com.employeeportal.service.login;
 
-import java.util.List;
-
 import com.employeeportal.model.LoginRequest;
 import com.employeeportal.model.LoginResponse;
 

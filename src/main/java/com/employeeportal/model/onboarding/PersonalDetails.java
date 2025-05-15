@@ -4,8 +4,6 @@ import com.employeeportal.model.registration.Employee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
 
 @Data
@@ -15,19 +13,6 @@ public class PersonalDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int personalDetailsId;
-
-    // private static final long serialVersionUID = 1L;
-
-    // @Id
-    // @Column(name = "employeeId")
-    // private int employeeId;
-
-    // @OneToOne
-    // @MapsId
-    // @JoinColumn(name = "employeeId")
-    // @JsonIgnore
-    // private Employee employee;
-
     private String imageUrl;
     private String personalEmail;
     private String gender;
