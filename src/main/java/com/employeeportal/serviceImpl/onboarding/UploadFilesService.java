@@ -41,7 +41,7 @@ public class UploadFilesService {
             Random random = new Random();
             int randomSevenDigitNumber = 1000000 + random.nextInt(9000000);
 
-            String uniqueFileName = originalFilename + "_" + currentTimestamp + "_" + randomSevenDigitNumber + ""
+            String uniqueFileName = originalFilename + "__" + currentTimestamp + "_" + randomSevenDigitNumber + "."
                     + extension;
 
             // Set upload path using injected property

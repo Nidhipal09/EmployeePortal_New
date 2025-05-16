@@ -205,7 +205,9 @@ public class OnboadingServiceImpl implements OnboardingService {
             String imageUrl = personalDetailsDTO.getImageUrl();
             if (imageUrl != null) {
                 imageUrl = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
-                personalDetailsDTO.setImageUrl(imageUrl);
+                String namePart = imageUrl.split("__")[0];
+                String extension = imageUrl.substring(imageUrl.lastIndexOf('.'));
+                personalDetailsDTO.setImageUrl(namePart + extension);
 
             }
             onboardingDetailsFromRedis.setPersonalDetails(personalDetailsDTO);
@@ -256,7 +258,9 @@ public class OnboadingServiceImpl implements OnboardingService {
             if (identificationUrl != null) {
 
                 identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
-                aadharCardDetailsDTO.setAadharIdentificationUrl(identificationUrl);
+                String namePart = identificationUrl.split("__")[0];
+                String extension = identificationUrl.substring(identificationUrl.lastIndexOf('.'));
+                aadharCardDetailsDTO.setAadharIdentificationUrl(namePart + extension);
             }
             onboardingDetailsFromRedis.setAadharCardDetails(aadharCardDetailsDTO);
 
@@ -283,7 +287,9 @@ public class OnboadingServiceImpl implements OnboardingService {
             String identificationUrl = panCardDetailsDTO.getPanIdentificationUrl();
             if (identificationUrl != null) {
                 identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
-                panCardDetailsDTO.setPanIdentificationUrl(identificationUrl);
+                String namePart = identificationUrl.split("__")[0];
+                String extension = identificationUrl.substring(identificationUrl.lastIndexOf('.'));
+                panCardDetailsDTO.setPanIdentificationUrl(namePart + extension);
 
             }
             onboardingDetailsFromRedis.setPanCardDetails(panCardDetailsDTO);
@@ -306,7 +312,9 @@ public class OnboadingServiceImpl implements OnboardingService {
             String identificationUrl = passportDetailsDTO.getPassportUrl();
             if (identificationUrl != null) {
                 identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
-                passportDetailsDTO.setPassportUrl(identificationUrl);
+                String namePart = identificationUrl.split("__")[0];
+                String extension = identificationUrl.substring(identificationUrl.lastIndexOf('.'));
+                passportDetailsDTO.setPassportUrl(namePart + extension);
 
             }
             onboardingDetailsFromRedis.setPassportDetails(passportDetailsDTO);
@@ -374,7 +382,9 @@ public class OnboadingServiceImpl implements OnboardingService {
                 String degreeCertificateUrl = educationDTO.getDegreeCertificateUrl();
                 if (degreeCertificateUrl != null) {
                     degreeCertificateUrl = degreeCertificateUrl.substring(degreeCertificateUrl.lastIndexOf('/') + 1);
-                    educationDTO.setDegreeCertificateUrl(degreeCertificateUrl);
+                    String namePart = degreeCertificateUrl.split("__")[0];
+                    String extension = degreeCertificateUrl.substring(degreeCertificateUrl.lastIndexOf('.'));
+                    educationDTO.setDegreeCertificateUrl(namePart + extension);
 
                 }
             });
@@ -406,14 +416,18 @@ public class OnboadingServiceImpl implements OnboardingService {
                 String relievingLetterUrl = employmentHistoryDTO.getRelievingLetterUrl();
                 if (relievingLetterUrl != null && relievingLetterUrl.contains("/")) {
                     relievingLetterUrl = relievingLetterUrl.substring(relievingLetterUrl.lastIndexOf('/') + 1);
-                    employmentHistoryDTO.setRelievingLetterUrl(relievingLetterUrl);
+                    String namePart = relievingLetterUrl.split("__")[0];
+                    String extension = relievingLetterUrl.substring(relievingLetterUrl.lastIndexOf('.'));
+                    employmentHistoryDTO.setRelievingLetterUrl(namePart + extension);
                 }
 
                 // Process appointmentLetterUrl
                 String appointmentLetterUrl = employmentHistoryDTO.getAppointmentLetterUrl();
                 if (appointmentLetterUrl != null && appointmentLetterUrl.contains("/")) {
                     appointmentLetterUrl = appointmentLetterUrl.substring(appointmentLetterUrl.lastIndexOf('/') + 1);
-                    employmentHistoryDTO.setAppointmentLetterUrl(appointmentLetterUrl);
+                    String namePart = appointmentLetterUrl.split("__")[0];
+                    String extension = appointmentLetterUrl.substring(appointmentLetterUrl.lastIndexOf('.'));
+                    employmentHistoryDTO.setAppointmentLetterUrl(namePart + extension);
                 }
 
                 // Process lastMonthSalarySlip1Url
@@ -421,7 +435,9 @@ public class OnboadingServiceImpl implements OnboardingService {
                 if (lastMonthSalarySlip1Url != null && lastMonthSalarySlip1Url.contains("/")) {
                     lastMonthSalarySlip1Url = lastMonthSalarySlip1Url
                             .substring(lastMonthSalarySlip1Url.lastIndexOf('/') + 1);
-                    employmentHistoryDTO.setLastMonthSalarySlip1Url(lastMonthSalarySlip1Url);
+                    String namePart = lastMonthSalarySlip1Url.split("__")[0];
+                    String extension = lastMonthSalarySlip1Url.substring(lastMonthSalarySlip1Url.lastIndexOf('.'));
+                    employmentHistoryDTO.setLastMonthSalarySlip1Url(namePart + extension);
                 }
 
                 // Process lastMonthSalarySlip2Url
@@ -429,7 +445,9 @@ public class OnboadingServiceImpl implements OnboardingService {
                 if (lastMonthSalarySlip2Url != null && lastMonthSalarySlip2Url.contains("/")) {
                     lastMonthSalarySlip2Url = lastMonthSalarySlip2Url
                             .substring(lastMonthSalarySlip2Url.lastIndexOf('/') + 1);
-                    employmentHistoryDTO.setLastMonthSalarySlip2Url(lastMonthSalarySlip2Url);
+                    String namePart = lastMonthSalarySlip2Url.split("__")[0];
+                    String extension = lastMonthSalarySlip2Url.substring(lastMonthSalarySlip2Url.lastIndexOf('.'));
+                    employmentHistoryDTO.setLastMonthSalarySlip2Url(namePart + extension);
                 }
 
                 // Process lastMonthSalarySlip3Url
@@ -437,7 +455,9 @@ public class OnboadingServiceImpl implements OnboardingService {
                 if (lastMonthSalarySlip3Url != null && lastMonthSalarySlip3Url.contains("/")) {
                     lastMonthSalarySlip3Url = lastMonthSalarySlip3Url
                             .substring(lastMonthSalarySlip3Url.lastIndexOf('/') + 1);
-                    employmentHistoryDTO.setLastMonthSalarySlip3Url(lastMonthSalarySlip3Url);
+                    String namePart = lastMonthSalarySlip3Url.split("__")[0];
+                    String extension = lastMonthSalarySlip3Url.substring(lastMonthSalarySlip3Url.lastIndexOf('.'));
+                    employmentHistoryDTO.setLastMonthSalarySlip3Url(namePart + extension);
                 }
             });
             onboardingDetailsFromRedis.setEmploymentHistories(employmentHistoryDTOs);
@@ -467,11 +487,10 @@ public class OnboadingServiceImpl implements OnboardingService {
             }
             professionalReferencesDTOs.forEach(professionalReferencesDTO -> {
                 ProfessionalReferences professionalReference = dtoToEntity(professionalReferencesDTO,
-                ProfessionalReferences.class);
+                        ProfessionalReferences.class);
                 professionalReference.setEmployee(employee);
                 professionalReferencesRepository.save(professionalReference);
             });
-
 
             onboardingDetailsFromRedis.setProfessionalReferences(professionalReferencesDTOs);
         }
@@ -510,7 +529,9 @@ public class OnboadingServiceImpl implements OnboardingService {
             String identificationUrl = passportDetailsDTO.getPassportUrl();
             if (identificationUrl != null) {
                 identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
-                passportDetailsDTO.setPassportUrl(identificationUrl);
+                String namePart = identificationUrl.split("__")[0];
+                String extension = identificationUrl.substring(identificationUrl.lastIndexOf('.'));
+                passportDetailsDTO.setPassportUrl(namePart + extension);
 
             }
             onboardingDetailsFromRedis.setPassportDetails(passportDetailsDTO);
@@ -537,7 +558,9 @@ public class OnboadingServiceImpl implements OnboardingService {
             String identificationUrl = visaDetailsDTO.getPassportCopyUrl();
             if (identificationUrl != null) {
                 identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
-                visaDetailsDTO.setPassportCopyUrl(identificationUrl);
+                String namePart = identificationUrl.split("__")[0];
+                String extension = identificationUrl.substring(identificationUrl.lastIndexOf('.'));
+                visaDetailsDTO.setPassportCopyUrl(namePart+extension);
 
             }
             onboardingDetailsFromRedis.setVisaDetails(visaDetailsDTO);
