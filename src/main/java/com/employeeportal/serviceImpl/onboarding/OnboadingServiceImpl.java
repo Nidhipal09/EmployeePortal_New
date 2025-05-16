@@ -199,6 +199,12 @@ public class OnboadingServiceImpl implements OnboardingService {
             personalDetailsFromDB.setSecondaryMobile(personalDetailsDTO.getSecondaryMobile());
             personalDetailsRepository.save(personalDetailsFromDB);
 
+            String imageUrl = personalDetailsDTO.getImageUrl();
+            if (imageUrl != null) {
+                imageUrl = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+                personalDetailsDTO.setImageUrl(imageUrl);
+
+            }
             onboardingDetailsFromRedis.setPersonalDetails(personalDetailsDTO);
 
             String firstName = employee.getFirstName() == null ? "" : employee.getFirstName() + " ";
@@ -243,6 +249,12 @@ public class OnboadingServiceImpl implements OnboardingService {
                 identificationDetailsRepository.save(identificationDetails);
             }
 
+            String identificationUrl = aadharCardDetailsDTO.getAadharIdentificationUrl();
+            if (identificationUrl != null) {
+
+                identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
+                aadharCardDetailsDTO.setAadharIdentificationUrl(identificationUrl);
+            }
             onboardingDetailsFromRedis.setAadharCardDetails(aadharCardDetailsDTO);
 
         }
@@ -265,6 +277,12 @@ public class OnboadingServiceImpl implements OnboardingService {
                 identificationDetailsRepository.save(identificationDetails);
             }
 
+            String identificationUrl = panCardDetailsDTO.getPanIdentificationUrl();
+            if (identificationUrl != null) {
+                identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
+                panCardDetailsDTO.setPanIdentificationUrl(identificationUrl);
+
+            }
             onboardingDetailsFromRedis.setPanCardDetails(panCardDetailsDTO);
         }
 
@@ -280,6 +298,13 @@ public class OnboadingServiceImpl implements OnboardingService {
                 PassportDetails passportDetails = dtoToEntity(passportDetailsDTO, PassportDetails.class);
                 passportDetails.setEmployee(employee);
                 passportDetailsRepository.save(passportDetails);
+            }
+
+            String identificationUrl = passportDetailsDTO.getPassportUrl();
+            if (identificationUrl != null) {
+                identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
+                passportDetailsDTO.setPassportUrl(identificationUrl);
+
             }
             onboardingDetailsFromRedis.setPassportDetails(passportDetailsDTO);
         }
@@ -336,12 +361,21 @@ public class OnboadingServiceImpl implements OnboardingService {
             if (educationFromRedis != null) {
                 educationRepository.deleteAllByEmployeeId(employeeId);
             }
-            onboardingDetailsFromRedis.setEducation(educationDTOs);
             educationDTOs.forEach(educationDTO -> {
                 Education educationDetails = dtoToEntity(educationDTO, Education.class);
                 educationDetails.setEmployee(employee);
                 educationRepository.save(educationDetails);
             });
+
+            educationDTOs.forEach(educationDTO -> {
+                String degreeCertificateUrl = educationDTO.getDegreeCertificateUrl();
+                if (degreeCertificateUrl != null) {
+                    degreeCertificateUrl = degreeCertificateUrl.substring(degreeCertificateUrl.lastIndexOf('/') + 1);
+                    educationDTO.setDegreeCertificateUrl(degreeCertificateUrl);
+
+                }
+            });
+            onboardingDetailsFromRedis.setEducation(educationDTOs);
         }
 
         if (!employmentHistoryDTOs.isEmpty()) {
@@ -354,6 +388,54 @@ public class OnboadingServiceImpl implements OnboardingService {
                 EmploymentHistory employmentHistory = dtoToEntity(employmentHistoryDTO, EmploymentHistory.class);
                 employmentHistory.setEmployee(employee);
                 employmentHistoryRepository.save(employmentHistory);
+            });
+
+            employmentHistoryDTOs.forEach(employmentHistoryDTO -> {
+                String experienceCertificateUrl = employmentHistoryDTO.getExperienceCertificateUrl();
+                if (experienceCertificateUrl != null) {
+                    experienceCertificateUrl = experienceCertificateUrl
+                            .substring(experienceCertificateUrl.lastIndexOf('/') + 1);
+                    employmentHistoryDTO.setExperienceCertificateUrl(experienceCertificateUrl);
+
+                }
+
+                // Process relievingLetterUrl
+                String relievingLetterUrl = employmentHistoryDTO.getRelievingLetterUrl();
+                if (relievingLetterUrl != null && relievingLetterUrl.contains("/")) {
+                    relievingLetterUrl = relievingLetterUrl.substring(relievingLetterUrl.lastIndexOf('/') + 1);
+                    employmentHistoryDTO.setRelievingLetterUrl(relievingLetterUrl);
+                }
+
+                // Process appointmentLetterUrl
+                String appointmentLetterUrl = employmentHistoryDTO.getAppointmentLetterUrl();
+                if (appointmentLetterUrl != null && appointmentLetterUrl.contains("/")) {
+                    appointmentLetterUrl = appointmentLetterUrl.substring(appointmentLetterUrl.lastIndexOf('/') + 1);
+                    employmentHistoryDTO.setAppointmentLetterUrl(appointmentLetterUrl);
+                }
+
+                // Process lastMonthSalarySlip1Url
+                String lastMonthSalarySlip1Url = employmentHistoryDTO.getLastMonthSalarySlip1Url();
+                if (lastMonthSalarySlip1Url != null && lastMonthSalarySlip1Url.contains("/")) {
+                    lastMonthSalarySlip1Url = lastMonthSalarySlip1Url
+                            .substring(lastMonthSalarySlip1Url.lastIndexOf('/') + 1);
+                    employmentHistoryDTO.setLastMonthSalarySlip1Url(lastMonthSalarySlip1Url);
+                }
+
+                // Process lastMonthSalarySlip2Url
+                String lastMonthSalarySlip2Url = employmentHistoryDTO.getLastMonthSalarySlip2Url();
+                if (lastMonthSalarySlip2Url != null && lastMonthSalarySlip2Url.contains("/")) {
+                    lastMonthSalarySlip2Url = lastMonthSalarySlip2Url
+                            .substring(lastMonthSalarySlip2Url.lastIndexOf('/') + 1);
+                    employmentHistoryDTO.setLastMonthSalarySlip2Url(lastMonthSalarySlip2Url);
+                }
+
+                // Process lastMonthSalarySlip3Url
+                String lastMonthSalarySlip3Url = employmentHistoryDTO.getLastMonthSalarySlip3Url();
+                if (lastMonthSalarySlip3Url != null && lastMonthSalarySlip3Url.contains("/")) {
+                    lastMonthSalarySlip3Url = lastMonthSalarySlip3Url
+                            .substring(lastMonthSalarySlip3Url.lastIndexOf('/') + 1);
+                    employmentHistoryDTO.setLastMonthSalarySlip3Url(lastMonthSalarySlip3Url);
+                }
             });
             onboardingDetailsFromRedis.setEmploymentHistories(employmentHistoryDTOs);
         }
@@ -380,13 +462,15 @@ public class OnboadingServiceImpl implements OnboardingService {
             if (professionalReferencesFromRedis != null) {
                 professionalReferencesRepository.deleteAllByEmployeeId(employeeId);
             }
-            onboardingDetailsFromRedis.setProfessionalReferences(professionalReferencesDTOs);
             professionalReferencesDTOs.forEach(professionalReferencesDTO -> {
                 ProfessionalReferences professionalReference = dtoToEntity(professionalReferencesDTO,
-                        ProfessionalReferences.class);
+                ProfessionalReferences.class);
                 professionalReference.setEmployee(employee);
                 professionalReferencesRepository.save(professionalReference);
             });
+
+
+            onboardingDetailsFromRedis.setProfessionalReferences(professionalReferencesDTOs);
         }
 
         if (!relativesDTOs.isEmpty()) {
@@ -419,6 +503,13 @@ public class OnboadingServiceImpl implements OnboardingService {
                 passportDetails.setEmployee(employee);
                 passportDetailsRepository.save(passportDetails);
             }
+
+            String identificationUrl = passportDetailsDTO.getPassportUrl();
+            if (identificationUrl != null) {
+                identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
+                passportDetailsDTO.setPassportUrl(identificationUrl);
+
+            }
             onboardingDetailsFromRedis.setPassportDetails(passportDetailsDTO);
 
         }
@@ -440,6 +531,12 @@ public class OnboadingServiceImpl implements OnboardingService {
                 visaDetailsRepository.save(visaDetails);
             }
 
+            String identificationUrl = visaDetailsDTO.getPassportCopyUrl();
+            if (identificationUrl != null) {
+                identificationUrl = identificationUrl.substring(identificationUrl.lastIndexOf('/') + 1);
+                visaDetailsDTO.setPassportCopyUrl(identificationUrl);
+
+            }
             onboardingDetailsFromRedis.setVisaDetails(visaDetailsDTO);
         }
 
@@ -502,7 +599,8 @@ public class OnboadingServiceImpl implements OnboardingService {
 
         // fetchOnboardingDetails(onboardingDetails, employeeId, pageIdentifier);
 
-        return new OnboardingResponseDTO(onboardingDetailsFromRedis, employee.getEmployeeId(), employee.getStatus(), pageIdentifier);
+        return new OnboardingResponseDTO(onboardingDetailsFromRedis, employee.getEmployeeId(), employee.getStatus(),
+                pageIdentifier);
     }
 
     @Override
@@ -531,7 +629,8 @@ public class OnboadingServiceImpl implements OnboardingService {
         String fullName = firstName + middleName + lastName;
         fullName = fullName.trim();
 
-        EmployeeDTO employeeDTO = new EmployeeDTO(employee.getEmployeeId(), fullName, employee.getMobileNumber(), employee.getDateOfBirth(),
+        EmployeeDTO employeeDTO = new EmployeeDTO(employee.getEmployeeId(), fullName, employee.getMobileNumber(),
+                employee.getDateOfBirth(),
                 employee.getEmail());
 
         return new PreviewResponseDTO(onboardingDetailsFromRedis, employeeDTO, employee.getStatus());
@@ -562,13 +661,13 @@ public class OnboadingServiceImpl implements OnboardingService {
     public void addPreviewDetails(String email, PreviewDto previewDto) {
         Employee employee = employeeRepository.findByEmail(email);
 
-        PreviewDetails previewDetails = new PreviewDetails();     
+        PreviewDetails previewDetails = new PreviewDetails();
         previewDetails.setEmployee(employee);
         previewDetails.setSignatureUrl(previewDto.getSignatureUrl());
         previewDetails.setDate(previewDto.getDate());
         previewDetails.setPlace(previewDto.getPlace());
 
-        previewRepository.save(previewDetails);        
+        previewRepository.save(previewDetails);
     }
 
 }
