@@ -10,6 +10,7 @@ import lombok.Data;
 public class OnboardingResponseDTO {
 
     private OnboardingDetails onboardingDetails;
+    private int employeeId;
     private String status;
     private String pageIdentifier;
 }

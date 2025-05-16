@@ -173,7 +173,7 @@ public class OnboadingServiceImpl implements OnboardingService {
 
         System.out.println("json redisssssssssssssssssss: " + onboardingDetailsJson);
 
-        return new OnboardingResponseDTO(onboardingDetailsFromRedis, employee.getStatus(), pageIdentifier);
+        return new OnboardingResponseDTO(onboardingDetailsFromRedis, employeeId, employee.getStatus(), pageIdentifier);
 
     }
 
@@ -502,7 +502,7 @@ public class OnboadingServiceImpl implements OnboardingService {
 
         // fetchOnboardingDetails(onboardingDetails, employeeId, pageIdentifier);
 
-        return new OnboardingResponseDTO(onboardingDetailsFromRedis, employee.getStatus(), pageIdentifier);
+        return new OnboardingResponseDTO(onboardingDetailsFromRedis, employee.getEmployeeId(), employee.getStatus(), pageIdentifier);
     }
 
     @Override
@@ -531,7 +531,7 @@ public class OnboadingServiceImpl implements OnboardingService {
         String fullName = firstName + middleName + lastName;
         fullName = fullName.trim();
 
-        EmployeeDTO employeeDTO = new EmployeeDTO(fullName, employee.getMobileNumber(), employee.getDateOfBirth(),
+        EmployeeDTO employeeDTO = new EmployeeDTO(employee.getEmployeeId(), fullName, employee.getMobileNumber(), employee.getDateOfBirth(),
                 employee.getEmail());
 
         return new PreviewResponseDTO(onboardingDetailsFromRedis, employeeDTO, employee.getStatus());
