@@ -2,6 +2,7 @@ package com.employeeportal.serviceImpl.onboarding;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +109,8 @@ public class OnboadingServiceImpl implements OnboardingService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    private static final long ONBOARDING_OBJ_EXPIRATION_TIME = 5; // 2 minutes
 
     @Value("${admin.email}")
     private String adminEmail;
@@ -705,7 +708,8 @@ public class OnboadingServiceImpl implements OnboardingService {
             e.printStackTrace();
         }
 
-        redisTemplate.opsForValue().set("onboarding:" + email, onboardingDetailsJson);
+        redisTemplate.opsForValue().set("onboarding:" + email, onboardingDetailsJson, ONBOARDING_OBJ_EXPIRATION_TIME,
+                TimeUnit.DAYS);
     }
 
 }
