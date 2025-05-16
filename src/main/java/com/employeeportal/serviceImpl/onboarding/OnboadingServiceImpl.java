@@ -109,6 +109,9 @@ public class OnboadingServiceImpl implements OnboardingService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Value("${admin.email}")
+    private String adminEmail;
+
     @Override
     public OnboardingResponseDTO fillOnboardingDetails(OnboardingDetails onboardingDetails, String email,
             String pageIdentifier) {
@@ -645,13 +648,10 @@ public class OnboadingServiceImpl implements OnboardingService {
         return "For employee " + email + ", status is updated from PENDING to " + status + " succeesully.";
     }
 
-    @Value("${admin.email}")
-    private String adminEmail;
-
     @Override
     public GeneralResponse notifyAdmin(String email) {
 
-        emailService.sendEmail(email, null,
+        emailService.sendEmail(adminEmail, null,
                 EmailConstant.VERIFY_EMPLOYEE_DETAILS_SUBJECT, EmailConstant.VERIFY_EMPLOYEE_DETAILS_TEMPLATE, email);
 
         return new GeneralResponse("An email is successfully sent to Admin to verify employee " + email + " details.");
