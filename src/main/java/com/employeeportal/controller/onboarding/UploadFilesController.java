@@ -27,7 +27,7 @@ public class UploadFilesController {
     private UploadFilesService uploadFilesService;
 
     @PostMapping("/uploadFile")
-    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN','ROLE_SUPER_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     public GeneralResponse<UploadedFiles> uploadFile(@RequestParam("file") MultipartFile upload) throws IOException {
         // Save the file and get the URL
         // UploadedFiles uploadedFile = filesService.uploadFile(upload);
