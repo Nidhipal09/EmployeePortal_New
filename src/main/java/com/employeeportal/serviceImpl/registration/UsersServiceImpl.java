@@ -14,6 +14,7 @@ import com.employeeportal.service.EmailService;
 import com.employeeportal.service.registration.UsersService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +38,9 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDto saveUsers(UserDto user) {
 
@@ -48,32 +52,35 @@ public class UsersServiceImpl implements UsersService {
         Employee employee = null;
         if (user.getRoleName().equals("EMPLOYEE")) {
             employee = employeeRepository.findByMobileNumber(user.getMobileNumber()).get();
-            employee.setFirstName(user.getFirstName());
-            employee.setLastName(user.getLastName());
-            employee.setEmail(user.getEmail());
+            if (employee != null) {
+                employee.setFirstName(user.getFirstName());
+                if(!user.getLastName().equals("")) employee.setLastName(user.getLastName());
+                employee.setEmail(user.getEmail());
 
-            EmployeeOrganizationDetails employeeOrganizationDetails = new EmployeeOrganizationDetails();
-            employeeOrganizationDetails.setEmployeeCode(user.getEmployeeCode());
-            employeeOrganizationDetails.setDesignation(user.getDesignation());
-            employeeOrganizationDetails.setReportingManager(user.getReportingManager());
-            employeeOrganizationDetails.setReportingHr(user.getReportingHr());
-            employeeOrganizationDetails.setProjects(user.getProjects());
-            employeeOrganizationDetails.setJoiningDate(user.getJoiningDate());
+                EmployeeOrganizationDetails employeeOrganizationDetails = new EmployeeOrganizationDetails();
+                employeeOrganizationDetails.setEmployeeCode(user.getEmployeeCode());
+                employeeOrganizationDetails.setDesignation(user.getDesignation());
+                employeeOrganizationDetails.setReportingManager(user.getReportingManager());
+                employeeOrganizationDetails.setReportingHr(user.getReportingHr());
+                employeeOrganizationDetails.setProjects(user.getProjects());
+                employeeOrganizationDetails.setJoiningDate(user.getJoiningDate());
 
-            Role role = roleRepository.findByRoleName(user.getRoleName());
-            employeeOrganizationDetails.setRole(role);
-            employeeOrganizationDetails.setEmployee(employee);
+                Role role = roleRepository.findByRoleName(user.getRoleName());
+                employeeOrganizationDetails.setRole(role);
+                employeeOrganizationDetails.setEmployee(employee);
+                employee.setEmployeeOrganizationDetails(employeeOrganizationDetails);
 
-            EmployeeReg employeeReg = employeeRegRepository.findByEmployeeId(employee.getEmployeeId());
-            employeeReg.setEmail(user.getEmail());
-            employeeReg.setPassword(user.getPassword());
-            employeeReg.setRole(role);
-            employeeReg.setEmployee(employee);
+                EmployeeReg employeeReg = employeeRegRepository.findByEmployeeId(employee.getEmployeeId());
+                employeeReg.setEmail(user.getEmail());
+                employeeReg.setPassword(passwordEncoder.encode(user.getPassword()));
+                employeeReg.setRole(role);
+                employeeReg.setEmployee(employee);
 
-            employeeRepository.save(employee);
+                employeeRepository.save(employee);
+            }
 
         } else {
-
+            // for admin or super admin
             employee = new Employee();
             employee.setFirstName(user.getFirstName());
             employee.setLastName(user.getLastName());
@@ -101,7 +108,7 @@ public class UsersServiceImpl implements UsersService {
             employeeRepository.save(employee);
         }
 
-        emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "Users Registration Successfully",
+        emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "Users Registered Successfully",
                 "registration.html");
 
         return user;
