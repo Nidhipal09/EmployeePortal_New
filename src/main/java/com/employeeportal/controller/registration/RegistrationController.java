@@ -45,8 +45,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/validateToken")
-    public ResponseEntity<ValidateTokenResponseDto> validateToken(@RequestBody TokenDto tokenDto) {
-        ValidateTokenResponseDto validateTokenResponseDto = registrationService.validateToken(tokenDto.getToken());
+    public ResponseEntity<ValidateTokenResponseDto> validateToken(@RequestParam String token) {
+        ValidateTokenResponseDto validateTokenResponseDto = registrationService.validateToken(token);
         if(validateTokenResponseDto.isTokenValid()) {
             return new ResponseEntity<>(validateTokenResponseDto, HttpStatus.OK);
         }

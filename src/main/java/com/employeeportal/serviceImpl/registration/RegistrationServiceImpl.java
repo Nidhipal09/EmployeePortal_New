@@ -1,5 +1,6 @@
 package com.employeeportal.serviceImpl.registration;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,6 +21,9 @@ import com.employeeportal.repository.registration.EmployeeRepository;
 import com.employeeportal.util.EncryptionUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -119,6 +123,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         String encryptedToken = null;
         try {
             encryptedToken = EncryptionUtil.encrypt(tokenString);
+            encryptedToken = URLEncoder.encode(encryptedToken, StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new EncryptionException("Error encrypting token: " + e.getMessage());
         }
@@ -153,6 +158,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         String decryptedToken;
         try {
             decryptedToken = EncryptionUtil.decrypt(token);
+            decryptedToken = URLDecoder.decode(decryptedToken, StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new EncryptionException("Error decrypting token: " + e.getMessage());
         }
@@ -172,7 +178,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjj" + redisTemplate.opsForValue().get(email));
 
             createOnboardingObj(email);
-            
+
             return new ValidateOtpDto(email, true);
         }
         return new ValidateOtpDto(email, false);
@@ -224,6 +230,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         // Decrypt the token
         String decryptedToken;
         try {
+            decryptedToken = URLDecoder.decode(token, StandardCharsets.UTF_8);
             decryptedToken = EncryptionUtil.decrypt(token);
         } catch (Exception e) {
             throw new EncryptionException("Error decrypting token: " + e.getMessage());
