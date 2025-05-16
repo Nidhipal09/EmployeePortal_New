@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import com.employeeportal.exception.AlreadyExistsException;
 import com.employeeportal.exception.EncryptionException;
 import com.employeeportal.exception.MobileNumberAlreadyExistsException;
-import com.employeeportal.model.onboarding.OnboardingDetails;
 import com.employeeportal.model.onboarding.PersonalDetails;
 import com.employeeportal.model.onboarding.Role;
 import com.employeeportal.model.registration.Employee;
@@ -19,8 +18,6 @@ import com.employeeportal.repository.onboarding.PersonalDetailsRepository;
 import com.employeeportal.repository.onboarding.RoleRepository;
 import com.employeeportal.repository.registration.EmployeeRepository;
 import com.employeeportal.util.EncryptionUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -36,6 +33,7 @@ import com.employeeportal.dto.registration.ValidateOtpDto;
 import com.employeeportal.dto.registration.ValidateTokenResponseDto;
 import com.employeeportal.service.EmailService;
 import com.employeeportal.service.registration.RegistrationService;
+import com.employeeportal.serviceImpl.onboarding.OnboadingServiceImpl;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
@@ -48,6 +46,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final EmailService emailService;
     private final RedisTemplate<String, Object> redisTemplate;
+
+    private OnboadingServiceImpl onboadingService;
 
     private static final long OTP_EXPIRATION_TIME = 2; // 2 minutes
 
@@ -177,26 +177,11 @@ public class RegistrationServiceImpl implements RegistrationService {
             redisTemplate.delete(email);
             System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjj" + redisTemplate.opsForValue().get(email));
 
-            createOnboardingObj(email);
+            onboadingService.createOnboardingObj(email);
 
             return new ValidateOtpDto(email, true);
         }
         return new ValidateOtpDto(email, false);
-    }
-
-    public void createOnboardingObj(String email) {
-        OnboardingDetails onboardingDetails = new OnboardingDetails();
-        String onboardingDetailsJson = null;
-        try {
-            onboardingDetailsJson = new ObjectMapper().writeValueAsString(onboardingDetails);
-            System.out.println("iiiiiiiiiiiiiiiiii"+onboardingDetailsJson);
-        } catch (JsonProcessingException e) {
-            System.out.println("errrrrrrrrrrror"+e.getMessage());
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        redisTemplate.opsForValue().set("onboarding:" + email, onboardingDetailsJson);
     }
 
     @Override

@@ -693,4 +693,19 @@ public class OnboadingServiceImpl implements OnboardingService {
         previewRepository.save(previewDetails);
     }
 
+    public void createOnboardingObj(String email) {
+        OnboardingDetails onboardingDetails = new OnboardingDetails();
+        String onboardingDetailsJson = null;
+        try {
+            onboardingDetailsJson = new ObjectMapper().writeValueAsString(onboardingDetails);
+            System.out.println("iiiiiiiiiiiiiiiiii"+onboardingDetailsJson);
+        } catch (JsonProcessingException e) {
+            System.out.println("errrrrrrrrrrror"+e.getMessage());
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        redisTemplate.opsForValue().set("onboarding:" + email, onboardingDetailsJson);
+    }
+
 }
