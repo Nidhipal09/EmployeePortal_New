@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDto {
 
+    private int employeeId;
     private String employeeCode;
     private String designation;
     private String reportingManager;

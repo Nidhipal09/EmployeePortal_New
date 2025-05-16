@@ -54,7 +54,8 @@ public class UsersServiceImpl implements UsersService {
             employee = employeeRepository.findByMobileNumber(user.getMobileNumber()).get();
             if (employee != null) {
                 employee.setFirstName(user.getFirstName());
-                if(!user.getLastName().equals("")) employee.setLastName(user.getLastName());
+                if (!user.getLastName().equals(""))
+                    employee.setLastName(user.getLastName());
                 employee.setEmail(user.getEmail());
 
                 EmployeeOrganizationDetails employeeOrganizationDetails = new EmployeeOrganizationDetails();
@@ -103,7 +104,7 @@ public class UsersServiceImpl implements UsersService {
 
             EmployeeReg employeeReg = new EmployeeReg();
             employeeReg.setEmail(user.getEmail());
-            employeeReg.setPassword(user.getPassword());
+            employeeReg.setPassword(passwordEncoder.encode(user.getPassword()));
             employeeReg.setRole(role);
             employeeReg.setEmployee(employee);
             employee.setEmployeeReg(employeeReg);
@@ -114,6 +115,8 @@ public class UsersServiceImpl implements UsersService {
         emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "Users Registered Successfully",
                 "registration.html");
 
+        Employee registeredUser = employeeRepository.findByEmail(user.getEmail());
+        user.setEmployeeId(registeredUser.getEmployeeId());
         return user;
     }
 
@@ -133,58 +136,57 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UserDto updateUsersById(Long usersId, UserDto user) {
-        if (employeeRepository.existsByEmail(user.getEmail())) {
-            throw new BadRequestException("User already registered.");
-        }
-
         Optional<Employee> employeeBox = employeeRepository.findById(usersId.intValue());
-        if (employeeBox.isPresent()) {
-            Employee employee = employeeBox.get();
-            int employeeId = employee.getEmployeeId();
-
-            EmployeeOrganizationDetails employeeOrganizationDetails = employeeOrganizationDetailsRepository
-                    .findByEmployeeId(employeeId).get();
-            EmployeeReg employeeReg = employeeRegRepository.findByEmployeeId(employeeId);
-
-            if (user.getPassword() != null)
-                employeeReg.setPassword(user.getPassword());
-
-            if (user.getFirstName() != null)
-                employee.setFirstName(user.getFirstName());
-            if (user.getLastName() != null)
-                employee.setLastName(user.getLastName());
-            if (user.getMobileNumber() != null)
-                employee.setMobileNumber(user.getMobileNumber());
-            if (user.getEmail() != null) {
-                employee.setEmail(user.getEmail());
-                employeeReg.setEmail(user.getEmail());
-            }
-
-            if (user.getEmployeeCode() != null)
-                employeeOrganizationDetails.setEmployeeCode(user.getEmployeeCode());
-            if (user.getDesignation() != null)
-                employeeOrganizationDetails.setDesignation(user.getDesignation());
-            if (user.getReportingManager() != null)
-                employeeOrganizationDetails.setReportingManager(user.getReportingManager());
-            if (user.getReportingHr() != null)
-                employeeOrganizationDetails.setReportingHr(user.getReportingHr());
-            if (user.getProjects() != null)
-                employeeOrganizationDetails.setProjects(user.getProjects());
-            if (user.getJoiningDate() != null)
-                employeeOrganizationDetails.setJoiningDate(user.getJoiningDate());
-
-            if (user.getRoleName() != null) {
-                Role role = roleRepository.findByRoleName(user.getRoleName());
-                employeeOrganizationDetails.setRole(role);
-                employeeReg.setRole(role);
-            }
-
-            employeeRepository.save(employee);
-
+        if (!employeeBox.isPresent()) {
+            throw new BadRequestException("User doesn't exists.");
         }
 
-        emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "Users Registration Successfully",
+        Employee employee = employeeBox.get();
+        int employeeId = employee.getEmployeeId();
+
+        EmployeeOrganizationDetails employeeOrganizationDetails = employeeOrganizationDetailsRepository
+                .findByEmployeeId(employeeId).get();
+        EmployeeReg employeeReg = employeeRegRepository.findByEmployeeId(employeeId);
+
+        if (user.getPassword() != null)
+            employeeReg.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (user.getFirstName() != null)
+            employee.setFirstName(user.getFirstName());
+        if (user.getLastName() != null)
+            employee.setLastName(user.getLastName());
+        if (user.getMobileNumber() != null)
+            employee.setMobileNumber(user.getMobileNumber());
+        if (user.getEmail() != null) {
+            employee.setEmail(user.getEmail());
+            employeeReg.setEmail(user.getEmail());
+        }
+
+        if (user.getEmployeeCode() != null)
+            employeeOrganizationDetails.setEmployeeCode(user.getEmployeeCode());
+        if (user.getDesignation() != null)
+            employeeOrganizationDetails.setDesignation(user.getDesignation());
+        if (user.getReportingManager() != null)
+            employeeOrganizationDetails.setReportingManager(user.getReportingManager());
+        if (user.getReportingHr() != null)
+            employeeOrganizationDetails.setReportingHr(user.getReportingHr());
+        if (user.getProjects() != null)
+            employeeOrganizationDetails.setProjects(user.getProjects());
+        if (user.getJoiningDate() != null)
+            employeeOrganizationDetails.setJoiningDate(user.getJoiningDate());
+
+        if (user.getRoleName() != null) {
+            Role role = roleRepository.findByRoleName(user.getRoleName());
+            employeeOrganizationDetails.setRole(role);
+            employeeReg.setRole(role);
+        }
+
+        employeeRepository.save(employee);
+
+        emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "Users updated Successfully",
                 "registration.html");
+
+        user.setEmployeeId(employeeId);        
         return user;
     }
 
@@ -207,6 +209,8 @@ public class UsersServiceImpl implements UsersService {
         user.setFirstName(employee.getFirstName());
         user.setLastName(employee.getLastName());
         user.setMobileNumber(employee.getMobileNumber());
+
+        user.setEmployeeId(employee.getEmployeeId());
 
         return user;
     }
