@@ -46,7 +46,7 @@ public class EmployeeOrganizationDetails {
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employeeId")
     private Employee employee;
 
     public void setJoiningDate(String joiningDate) {
