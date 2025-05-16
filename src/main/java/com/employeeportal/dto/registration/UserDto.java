@@ -13,7 +13,6 @@ public class UserDto {
     private String employeeCode;
     private String designation;
     private String reportingManager;
-    private String reportingHr;
     private String projects;
     private String joiningDate;
     private String roleName;

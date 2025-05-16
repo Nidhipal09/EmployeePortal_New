@@ -68,7 +68,6 @@ public class UsersServiceImpl implements UsersService {
                 employeeOrganizationDetails.setEmployeeCode(user.getEmployeeCode());
                 employeeOrganizationDetails.setDesignation(user.getDesignation());
                 employeeOrganizationDetails.setReportingManager(user.getReportingManager());
-                employeeOrganizationDetails.setReportingHr(user.getReportingHr());
                 employeeOrganizationDetails.setProjects(user.getProjects());
                 employeeOrganizationDetails.setJoiningDate(user.getJoiningDate());
 
@@ -99,7 +98,6 @@ public class UsersServiceImpl implements UsersService {
             employeeOrganizationDetails.setEmployeeCode(user.getEmployeeCode());
             employeeOrganizationDetails.setDesignation(user.getDesignation());
             employeeOrganizationDetails.setReportingManager(user.getReportingManager());
-            employeeOrganizationDetails.setReportingHr(user.getReportingHr());
             employeeOrganizationDetails.setProjects(user.getProjects());
             employeeOrganizationDetails.setJoiningDate(user.getJoiningDate());
 
@@ -177,8 +175,6 @@ public class UsersServiceImpl implements UsersService {
             employeeOrganizationDetails.setDesignation(user.getDesignation());
         if (user.getReportingManager() != null)
             employeeOrganizationDetails.setReportingManager(user.getReportingManager());
-        if (user.getReportingHr() != null)
-            employeeOrganizationDetails.setReportingHr(user.getReportingHr());
         if (user.getProjects() != null)
             employeeOrganizationDetails.setProjects(user.getProjects());
         if (user.getJoiningDate() != null)
@@ -207,7 +203,6 @@ public class UsersServiceImpl implements UsersService {
         user.setEmployeeCode(employeeOrganizationDetails.getEmployeeCode());
         user.setDesignation(employeeOrganizationDetails.getDesignation());
         user.setReportingManager(employeeOrganizationDetails.getReportingManager());
-        user.setReportingHr(employeeOrganizationDetails.getReportingHr());
         user.setProjects(employeeOrganizationDetails.getProjects());
         user.setJoiningDate(employeeOrganizationDetails.getJoiningDate());
         user.setRoleName(employeeOrganizationDetails.getRole().getRoleName());
