@@ -155,7 +155,7 @@ public class OnboadingServiceImpl implements OnboardingService {
 
             fillInProfessionalDetails(onboardingDetails, onboardingDetailsFromRedis, employee, employeeId);
 
-        } else if (pageIdentifier.equals("other")) {
+        } else if (pageIdentifier.equals("additional")) {
 
             fillInOtherDetails(onboardingDetails, onboardingDetailsFromRedis, employee, employeeId);
 
@@ -483,7 +483,7 @@ public class OnboadingServiceImpl implements OnboardingService {
             throw new NotFoundException("Employee not found with email: " + email);
         if (!pageIdentifier.equals("personalDetails") && !pageIdentifier.equals("contact") &&
                 !pageIdentifier.equals("education") && !pageIdentifier.equals("professional") &&
-                !pageIdentifier.equals("other")) {
+                !pageIdentifier.equals("additional")) {
             throw new NotFoundException("Invalid page identifier: " + pageIdentifier);
         }
 
