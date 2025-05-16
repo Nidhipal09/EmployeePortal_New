@@ -68,7 +68,7 @@ public class EmailService {
         }
     }
 
-    public void sendRegistrationEmail(String email, String password, String subject, String templateName) {
+    public void sendRegistrationEmail(String email, String password, String subject, String templateName, String token) {
         try {
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -77,6 +77,7 @@ public class EmailService {
             Context ctx = new Context();
             ctx.setVariable("email", email);
             ctx.setVariable("password", password);
+            ctx.setVariable("token", token);
             helper.setText(templateEngine.process(templateName, ctx), true);
             helper.setSubject(subject);
             emailSender.send(message);

@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registration Successful</title>
+    <title>User updated successfully</title>
 </head>
 <body>
     <div style="max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; margin-top: 50px; font-family: Arial, sans-serif;">
         <div>
-            <h2 style="text-align:center; color: #2e6da4;">Registration Successful</h2>
+            <h2 style="text-align:center; color: #2e6da4;">User updated successfully</h2>
             <p>Hello User,</p>
-            <p>Your account has been successfully created. Below are your login credentials:</p>
+            <p>Your account has been successfully updated. Below are your login credentials:</p>
             <p><strong>Email:</strong> <span th:text="${email}"></span></p>
             <p><strong>Password:</strong> <span th:text="${password}"></span></p>
-            <p>You can update your password at any time using the following link:</p>
-            <p>
-                <a th:href="'http://localhost:3000/resetPassword?token=' + ${token}" target="_blank" style="color: #337ab7;">Reset Password</a>
-            </p>
             <p>Thank You,<br/>Employee Portal System</p>
         </div>
     </div>

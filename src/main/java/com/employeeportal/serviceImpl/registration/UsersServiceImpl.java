@@ -2,10 +2,12 @@ package com.employeeportal.serviceImpl.registration;
 
 import com.employeeportal.dto.registration.UserDto;
 import com.employeeportal.exception.BadRequestException;
+import com.employeeportal.model.JwtEntity;
 import com.employeeportal.model.onboarding.EmployeeOrganizationDetails;
 import com.employeeportal.model.onboarding.Role;
 import com.employeeportal.model.registration.Employee;
 import com.employeeportal.model.registration.EmployeeReg;
+import com.employeeportal.repository.JwtRepository;
 import com.employeeportal.repository.onboarding.EmployeeOrganizationDetailsRepository;
 import com.employeeportal.repository.onboarding.RoleRepository;
 import com.employeeportal.repository.registration.EmployeeRegRepository;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -40,6 +43,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtRepository jwtRepository;
 
     @Override
     public UserDto saveUsers(UserDto user) {
@@ -112,8 +118,11 @@ public class UsersServiceImpl implements UsersService {
             employeeRepository.save(employee);
         }
 
-        emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "Users Registered Successfully",
-                "registration.html");
+        String token = UUID.randomUUID().toString();
+        jwtRepository.save(new JwtEntity(token, true, employee.getEmployeeId()));
+
+        emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "User Registered Successfully",
+                "registration.html", token);
 
         Employee registeredUser = employeeRepository.findByEmail(user.getEmail());
         user.setEmployeeId(registeredUser.getEmployeeId());
@@ -183,8 +192,8 @@ public class UsersServiceImpl implements UsersService {
 
         employeeRepository.save(employee);
 
-        emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "Users updated Successfully",
-                "registration.html");
+        emailService.sendRegistrationEmail(user.getEmail(), user.getPassword(), "User updated Successfully",
+                "update-user.html", null);
 
         user.setEmployeeId(employeeId);        
         return user;

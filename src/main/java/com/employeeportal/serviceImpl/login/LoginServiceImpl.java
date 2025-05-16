@@ -142,6 +142,7 @@ public class LoginServiceImpl implements LoginService {
         if (jwtEntity == null) {
             throw new Exception("Invalid token or employee not found");
         }
+        jwtRepository.deleteById(jwtEntity.getId());
 
         EmployeeReg employeeReg = employeeRegRepository.findByEmployeeId(jwtEntity.getPrimaryId());
         employeeReg.setPassword(passwordEncoder.encode(newPassword));
