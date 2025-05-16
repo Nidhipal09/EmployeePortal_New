@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.employeeportal.dto.onboarding.GeneralResponse;
 import com.employeeportal.dto.onboarding.OnboardingResponseDTO;
+import com.employeeportal.dto.onboarding.PreviewDto;
 import com.employeeportal.dto.onboarding.PreviewResponseDTO;
 import com.employeeportal.dto.onboarding.UpdateStatusRequest;
 import com.employeeportal.model.onboarding.OnboardingDetails;
@@ -57,6 +58,15 @@ public class OnboardingController {
         System.out.println(previewResponseDTO.toString());
         return new ResponseEntity<>(previewResponseDTO, HttpStatus.OK);
     }
+
+    @PostMapping("/preview")
+    @PreAuthorize("isAuthenticated()")
+    // for preview
+    public ResponseEntity<GeneralResponse> AddPreviewDetails(@RequestParam String email, @RequestBody PreviewDto previewDto) {
+        onboardingService.addPreviewDetails(email, previewDto);
+        return new ResponseEntity<>(new GeneralResponse("All details are submitted successfully."), HttpStatus.OK);
+    }
+
 
     @PostMapping("/notifyAdmin")
     @PreAuthorize("isAuthenticated()")

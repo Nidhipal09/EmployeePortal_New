@@ -19,6 +19,7 @@ import com.employeeportal.dto.onboarding.AdditionalDetailsDTO;
 import com.employeeportal.dto.onboarding.PanCardDetailsDTO;
 import com.employeeportal.dto.onboarding.PassportDetailsDTO;
 import com.employeeportal.dto.onboarding.PersonalDetailsDTO;
+import com.employeeportal.dto.onboarding.PreviewDto;
 import com.employeeportal.dto.onboarding.PreviewResponseDTO;
 import com.employeeportal.dto.onboarding.EmploymentHistoryDTO;
 import com.employeeportal.dto.onboarding.GeneralResponse;
@@ -36,6 +37,7 @@ import com.employeeportal.model.onboarding.OnboardingDetails;
 import com.employeeportal.model.onboarding.AdditionalDetails;
 import com.employeeportal.model.onboarding.PassportDetails;
 import com.employeeportal.model.onboarding.PersonalDetails;
+import com.employeeportal.model.onboarding.PreviewDetails;
 import com.employeeportal.model.onboarding.EmploymentHistory;
 import com.employeeportal.model.onboarding.ProfessionalReferences;
 import com.employeeportal.model.onboarding.Relatives;
@@ -48,6 +50,7 @@ import com.employeeportal.repository.onboarding.IdentificationDetailsRepository;
 import com.employeeportal.repository.onboarding.OtherDetailsRepository;
 import com.employeeportal.repository.onboarding.PassportDetailsRepository;
 import com.employeeportal.repository.onboarding.PersonalDetailsRepository;
+import com.employeeportal.repository.onboarding.PreviewRepository;
 import com.employeeportal.repository.onboarding.ProfessionalReferencesRepository;
 import com.employeeportal.repository.onboarding.RelativesRepository;
 import com.employeeportal.repository.onboarding.VisaDetailsRepository;
@@ -96,6 +99,9 @@ public class OnboadingServiceImpl implements OnboardingService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private PreviewRepository previewRepository;
 
     @Autowired
     private EmailService emailService;
@@ -550,6 +556,19 @@ public class OnboadingServiceImpl implements OnboardingService {
                 EmailConstant.VERIFY_EMPLOYEE_DETAILS_SUBJECT, EmailConstant.VERIFY_EMPLOYEE_DETAILS_TEMPLATE, email);
 
         return new GeneralResponse("An email is successfully sent to Admin to verify employee " + email + " details.");
+    }
+
+    @Override
+    public void addPreviewDetails(String email, PreviewDto previewDto) {
+        Employee employee = employeeRepository.findByEmail(email);
+
+        PreviewDetails previewDetails = new PreviewDetails();     
+        previewDetails.setEmployee(employee);
+        previewDetails.setSignatureUrl(previewDto.getSignatureUrl());
+        previewDetails.setDate(previewDto.getDate());
+        previewDetails.setPlace(previewDto.getPlace());
+
+        previewRepository.save(previewDetails);        
     }
 
 }
