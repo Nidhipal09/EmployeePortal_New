@@ -86,6 +86,7 @@ public class UsersServiceImpl implements UsersService {
             employee.setLastName(user.getLastName());
             employee.setEmail(user.getEmail());
             employee.setMobileNumber(user.getMobileNumber());
+            employee.setStatus("CREATED");
 
             EmployeeOrganizationDetails employeeOrganizationDetails = new EmployeeOrganizationDetails();
             employeeOrganizationDetails.setEmployeeCode(user.getEmployeeCode());
@@ -98,12 +99,14 @@ public class UsersServiceImpl implements UsersService {
             Role role = roleRepository.findByRoleName(user.getRoleName());
             employeeOrganizationDetails.setRole(role);
             employeeOrganizationDetails.setEmployee(employee);
+            employee.setEmployeeOrganizationDetails(employeeOrganizationDetails);
 
             EmployeeReg employeeReg = new EmployeeReg();
             employeeReg.setEmail(user.getEmail());
             employeeReg.setPassword(user.getPassword());
             employeeReg.setRole(role);
             employeeReg.setEmployee(employee);
+            employee.setEmployeeReg(employeeReg);
 
             employeeRepository.save(employee);
         }
