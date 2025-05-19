@@ -89,13 +89,10 @@ public class LoginServiceImpl implements LoginService {
         System.out.println(employeeReg.getPassword() + " " + loginRequest.getPassword());
         // Check if the email matches and validate the password
 
-        System.out.println("111");
         if (!passwordEncoder.matches(loginRequest.getPassword(), employeeReg.getPassword())) {
-            System.out.println("sjsksksl");
             throw new BadCredentialsException(ApplicationConstant.AUTHORIZATION_PASSWORD_ERROR);
         }
 
-        System.out.println("2222");
         // Prepare LoginResponse
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setEmail(employeeReg.getEmployee().getEmail());

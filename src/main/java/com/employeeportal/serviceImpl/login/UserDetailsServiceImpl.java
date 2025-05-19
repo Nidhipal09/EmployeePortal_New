@@ -29,8 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         }
         if (employeeReg != null) {
-            System.out
-                    .println("lllllllllllllllllllllllllll" + employeeReg.getEmail() + "  " + employeeReg.getPassword());
             return new User(employeeReg.getEmail(), employeeReg.getPassword(), employeeReg.getAuthorities());
         } else {
             throw new EmployeeNotFoundException();

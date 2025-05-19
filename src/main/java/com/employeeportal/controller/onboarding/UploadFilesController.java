@@ -30,7 +30,6 @@ public class UploadFilesController {
     @PreAuthorize("isAuthenticated()")
     public GeneralResponse<UploadedFiles> uploadFile(@RequestParam("file") MultipartFile upload) throws IOException {
         // Save the file and get the URL
-        // UploadedFiles uploadedFile = filesService.uploadFile(upload);
         UploadedFiles uploadedFile = uploadFilesService.handleFileUpload(upload);
         // Return response with file URL
         return new GeneralResponse<>(true, "Upload file Successfully", uploadedFile);

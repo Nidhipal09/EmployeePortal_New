@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import com.employeeportal.exception.AlreadyExistsException;
 import com.employeeportal.exception.EncryptionException;
 import com.employeeportal.exception.MobileNumberAlreadyExistsException;
+import com.employeeportal.model.onboarding.OnboardingDetails;
 import com.employeeportal.model.onboarding.PersonalDetails;
 import com.employeeportal.model.onboarding.Role;
 import com.employeeportal.model.registration.Employee;
@@ -18,6 +19,8 @@ import com.employeeportal.repository.onboarding.PersonalDetailsRepository;
 import com.employeeportal.repository.onboarding.RoleRepository;
 import com.employeeportal.repository.registration.EmployeeRepository;
 import com.employeeportal.util.EncryptionUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -51,6 +54,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private static final long OTP_EXPIRATION_TIME = 2; // 2 minutes
 
+    private static final long ONBOARDING_OBJ_EXPIRATION_TIME = 5; // 5 days
     @Autowired
     public RegistrationServiceImpl(EmployeeRepository employeeRepository,
             EmailService emailService, PasswordEncoder passwordEncoder, RedisTemplate<String, Object> redisTemplate,
@@ -71,7 +75,6 @@ public class RegistrationServiceImpl implements RegistrationService {
             throw new MobileNumberAlreadyExistsException(
                     "Employee with this mobile number already exists, kindly use a different one.");
 
-        System.out.println("1111111111111");
         Employee employee = new Employee();
 
         String fullName = employeeRegistrationDTO.getFullName();
@@ -90,7 +93,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
 
         employee.setEmail(employeeRegistrationDTO.getEmail());
-        System.out.println(employeeRegistrationDTO.toString());
         employee.setMobileNumber(employeeRegistrationDTO.getMobileNumber());
         employee.setDateOfBirth(employeeRegistrationDTO.getDateOfBirth());
         employee.setStatus("PENDING");
@@ -114,8 +116,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         employeeReg.setEmployee(employee);
 
         employeeRepository.save(employee);
-
-        System.out.println("22222222222222");
 
         // String token = UUID.randomUUID().toString();
         String tokenString = employeeRegistrationDTO.getEmail() + "|" + employeeRegistrationDTO.getMobileNumber() + "|"
@@ -146,8 +146,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         redisTemplate.opsForValue().set(email, otp, OTP_EXPIRATION_TIME,
                 TimeUnit.MINUTES);
 
-        System.out.println("ooooooooooooooooooooooooooooooooooooooo" + redisTemplate.opsForValue().get(email));
-
         emailService.sendEmail(email, otp, EmailConstant.SIGN_UP_OTP_SUBJECT,
                 EmailConstant.SIGN_UP_OTP_TEMPLATE_NAME);
 
@@ -162,8 +160,8 @@ public class RegistrationServiceImpl implements RegistrationService {
         } catch (Exception e) {
             throw new EncryptionException("Error decrypting token: " + e.getMessage());
         }
-
-        System.out.println(token + " " + decryptedToken);
+        
+        System.out.println("token: "+decryptedToken);
         // Split the decrypted token to get email and mobile number
         String[] parts = decryptedToken.split("\\|");
 
@@ -173,11 +171,9 @@ public class RegistrationServiceImpl implements RegistrationService {
         System.out.println("Retrieved OTP from Redis for " + email + ": " + cachedOtp + " " + otp);
 
         if (cachedOtp != null && cachedOtp.equals(otp)) {
-            System.out.println("jkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" + redisTemplate.opsForValue().get(email));
             redisTemplate.delete(email);
-            System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjj" + redisTemplate.opsForValue().get(email));
-
-            onboadingService.createOnboardingObj(email);
+            System.out.println("log");
+            createOnboardingObj(email);
 
             return new ValidateOtpDto(email, true);
         }
@@ -196,6 +192,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         String encryptedToken = null;
         try {
             encryptedToken = EncryptionUtil.encrypt(tokenString);
+            encryptedToken = URLEncoder.encode(encryptedToken, StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new EncryptionException("Error encrypting token: " + e.getMessage());
         }
@@ -221,7 +218,6 @@ public class RegistrationServiceImpl implements RegistrationService {
             throw new EncryptionException("Error decrypting token: " + e.getMessage());
         }
 
-        System.out.println(token + " " + decryptedToken);
         // Split the decrypted token to get email and mobile number
         String[] parts = decryptedToken.split("\\|");
 
@@ -246,7 +242,6 @@ public class RegistrationServiceImpl implements RegistrationService {
             return new ValidateTokenResponseDto(false, "Invalid token", email); // Invalid token format
         }
 
-        System.out.println("hereeeeeeeeeeeeeeeeeeeeeeeee");
         LocalDateTime employeeDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
         LocalDateTime dateTime = LocalDateTime.parse(timeStamp, formatter);
@@ -259,5 +254,18 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         // Check if the email and mobile number match the expected values
         return new ValidateTokenResponseDto(true, "Valid token", email);
+    }
+
+    public void createOnboardingObj(String email) {
+        OnboardingDetails onboardingDetails = new OnboardingDetails();
+        String onboardingDetailsJson = null;
+        try {
+            onboardingDetailsJson = new ObjectMapper().writeValueAsString(onboardingDetails);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        redisTemplate.opsForValue().set("onboarding:" + email, onboardingDetailsJson, ONBOARDING_OBJ_EXPIRATION_TIME,
+                TimeUnit.DAYS);
     }
 }

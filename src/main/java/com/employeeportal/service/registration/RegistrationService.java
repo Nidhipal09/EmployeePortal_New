@@ -16,23 +16,4 @@ public interface RegistrationService {
 	String resendActivationLink(String email);
 
 	ValidateTokenResponseDto validateToken(String token);
-
-	// Employee findByEmail(String email);
-
-	// void createUser(Employee user);
-
-	// PrimaryDetails savePrimaryDetails(PrimaryDetailsDTO primaryDetails);
-
-	// List<PrimaryDetails> getAllPrimaryDetails();
-
-	// PrimaryDetails getPrimaryDetailsById(Long primaryId);
-
-	// PrimaryDetails updatePrimaryDetailsById(Long primaryId, PrimaryDetails
-	// primaryDetails);
-
-	// PrimaryDetails deletePrimaryDetailsById(Long primaryId);
-
-	// PrimaryPreviewResponse getPrimaryDetails(Long primaryId);
-
-	// String sendPreviewDetailsToHR(PreviewDetailsDTO previewDetailsDTO);
 }

@@ -57,7 +57,6 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
-        System.out.println("11111111111111111111111111111111111  inside Jwt filter");
         final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -75,20 +74,15 @@ public class JwtFilter extends OncePerRequestFilter {
             final String userEmail = jwtUtil.extractUsername(jwt);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaa" + authentication);
-            System.out.println("bbbbbbbbbbbbbbbbbbbbbb" + userEmail);
 
             if (userEmail != null && authentication == null) {
                 UserDetails userDetails = this.service.loadUserByUsername(userEmail);
 
-                System.out.println("cccccccccccccccccccccccccccccc" + userDetails);
                 if (jwtUtil.validateToken(jwt, userDetails)) {
-                    System.out.println("2222222222222222222222222222222222222222  inside Jwt filter");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
                             userDetails.getAuthorities());
-                    System.out.println("33333333333333333333333333333333333  inside Jwt filter" + authToken);
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);

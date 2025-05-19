@@ -51,7 +51,7 @@ public class OnboardingController {
 
     @GetMapping("/preview")
     @PreAuthorize("isAuthenticated()")
-    // for preview
+    // get all the details for the preview page
     public ResponseEntity<PreviewResponseDTO> getAllOnboardingDetails(@RequestParam String email) {
         System.out.println("email" + email);
         PreviewResponseDTO previewResponseDTO = onboardingService.getAllOnboardingDetails(email);
@@ -61,7 +61,7 @@ public class OnboardingController {
 
     @PostMapping("/preview")
     @PreAuthorize("isAuthenticated()")
-    // for preview
+    // add other details from preview page
     public ResponseEntity<GeneralResponse> AddPreviewDetails(@RequestParam String email, @RequestBody PreviewDto previewDto) {
         onboardingService.addPreviewDetails(email, previewDto);
         return new ResponseEntity<>(new GeneralResponse("All details are submitted successfully."), HttpStatus.OK);
@@ -70,7 +70,7 @@ public class OnboardingController {
 
     @PostMapping("/notifyAdmin")
     @PreAuthorize("isAuthenticated()")
-    // for preview
+    // send notification to admin to verify employee details
     public ResponseEntity<GeneralResponse> notifyAdmin(@RequestParam String email) {
         GeneralResponse generalResponse = onboardingService.notifyAdmin(email);
         return new ResponseEntity<>(generalResponse, HttpStatus.OK);

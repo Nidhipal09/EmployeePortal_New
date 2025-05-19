@@ -1,10 +1,11 @@
 package com.employeeportal.controller.registration;
 
 import javax.validation.Valid;
+
+import com.employeeportal.dto.onboarding.GeneralResponse;
 import com.employeeportal.dto.registration.RegistrationRequestDTO;
 import com.employeeportal.dto.registration.RegistrationResponseDTO;
 import com.employeeportal.dto.registration.SendOtpDto;
-import com.employeeportal.dto.registration.TokenDto;
 import com.employeeportal.dto.registration.ValidateOtpDto;
 import com.employeeportal.dto.registration.ValidateTokenResponseDto;
 import com.employeeportal.exception.NotFoundException;
@@ -56,7 +57,6 @@ public class RegistrationController {
 
     @PostMapping("/sendOtp")
     public ResponseEntity<?> sendOtpEmail(@RequestBody SendOtpDto email) {
-        System.out.println("skjskjskjssssssssjjjjjjjjjjjjjjjjjjj" + email.getEmail());
         String otp = registrationService.sendOtpEmail(email.getEmail());
         return ResponseEntity.ok(new OtpResponse(otp));
     }
@@ -80,7 +80,6 @@ public class RegistrationController {
                     true);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception ex) {
-            System.out.println("erroooooooooooooooooooooooooooooooor");
             ResponseDTO response = responseUtil.prepareResponseDto(null,
                     "Invalid or expired OTP",
                     HttpStatus.BAD_REQUEST.value(), 
@@ -96,68 +95,23 @@ public class RegistrationController {
     }
 
     @PostMapping("/resend-activation-link")
-    public ResponseEntity<String> resendActivationLink(@RequestParam String email ) {
+    public ResponseEntity<?> resendActivationLink(@RequestParam String email ) {
 
         if (email == null || email.isEmpty()) {
-            return ResponseEntity.badRequest().body("Email is required.");
+            GeneralResponse response = new GeneralResponse("Email is required.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
             String activationLink = registrationService.resendActivationLink(email);
-            return ResponseEntity.ok("Activation link resent successfully: " + activationLink);
+            GeneralResponse response = new GeneralResponse("Activation link resent successfully: " + activationLink);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            GeneralResponse response = new GeneralResponse(e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to resend activation link.");
+            GeneralResponse response = new GeneralResponse("Failed to resend activation link.");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    // @PostMapping("/save")
-    // @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN','ROLE_SUPER_ADMIN')")
-    // public ResponseEntity<PrimaryDetails> savePrimaryDetails(@RequestBody
-    // PrimaryDetailsDTO primaryDetails) {
-    // PrimaryDetails addprimaryDetails =
-    // registrationService.savePrimaryDetails(primaryDetails);
-    // return new ResponseEntity<>(addprimaryDetails, HttpStatus.CREATED);
-
-    // }
-
-    // @GetMapping("/allPrimaryDetails")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_EMPLOYEE')")
-    // public ResponseEntity<List<PrimaryDetails>> getAllPrimaryDetails() {
-    // List<PrimaryDetails> allPrimaryDetails =
-    // registrationService.getAllPrimaryDetails();
-    // return new ResponseEntity<>(allPrimaryDetails, HttpStatus.OK);
-    // }
-
-    // @GetMapping("/primary/{primaryId}")
-    // @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN','ROLE_SUPER_ADMIN')")
-    // public ResponseEntity<PrimaryDetails>
-    // getPrimaryDetailsById(@PathVariable("primaryId") Long primaryId) {
-    // PrimaryDetails primaryDetailsById =
-    // registrationService.getPrimaryDetailsById(primaryId);
-
-    // if (primaryDetailsById == null) {
-    // throw new ResourceNotFoundException("User not found with id " + primaryId);
-    // }
-    // return new ResponseEntity<>(primaryDetailsById, HttpStatus.OK);
-    // }
-
-    // @PutMapping("/update/{primaryId}")
-    // public ResponseEntity<PrimaryDetails>
-    // updatePrimaryDetailsById(@PathVariable("primaryId") Long primaryId,
-    // @RequestBody PrimaryDetails primaryDetails) {
-    // PrimaryDetails updatePrimaryDetails =
-    // registrationService.updatePrimaryDetailsById(primaryId, primaryDetails);
-    // // return ResponseEntity.ok(updateUser);
-    // return new ResponseEntity<>(updatePrimaryDetails, HttpStatus.OK);
-    // }
-
-    // @DeleteMapping("/delete/{primaryId}")
-    // public ResponseEntity<String>
-    // deletePrimaryDetailsById(@PathVariable("primaryId") Long primaryId) {
-    // PrimaryDetails isDeleted =
-    // registrationService.deletePrimaryDetailsById(primaryId);
-    // return new ResponseEntity<>("data deleted", HttpStatus.OK);
-    // }
 
 }
